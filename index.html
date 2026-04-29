@@ -274,6 +274,13 @@ footer .eye-small { display:inline-block; margin-bottom:1rem; opacity:0.35; }
 .ap-toast.show { transform:translateY(0); opacity:1; }
 .ap-toast.err { border-color:var(--red-border); color:var(--red-fg); }
 
+/* Translation */
+.ap-badge.trans { background:rgba(40,140,200,0.1); color:#7bbde0; border:1px solid rgba(40,140,200,0.28); }
+.ap-action-btn.translating { opacity:0.5; cursor:not-allowed; }
+.ap-action-btn.translating::before { content:'↻ '; display:inline-block; animation:spin-icon 0.8s linear infinite; }
+@keyframes spin-icon { to{transform:rotate(360deg);} }
+.post-card .translation-notice { display:inline-block; font-family:'Cinzel',serif; font-size:0.52rem; letter-spacing:0.1em; color:rgba(123,189,224,0.7); margin-left:0.5rem; vertical-align:middle; }
+
 /* ── LIGHT MODE ── */
 body.light {
   --ink:#f0e9d8; --ink2:#faf5ea; --ink3:#f5eed9;
@@ -608,6 +615,13 @@ body.light .scroll-hint::after { background:linear-gradient(to bottom,var(--gold
         <option value="scheduled">Planlagt</option>
       </select>
     </div>
+    <div class="field">
+      <label>Originalspråk</label>
+      <select id="new-orig-lang">
+        <option value="no">Norsk</option>
+        <option value="en">English</option>
+      </select>
+    </div>
     <div class="field field-conditional" id="field-publish-at">
       <label>Publiseringsdato</label>
       <input type="date" id="new-publish-at">
@@ -881,6 +895,11 @@ function isVisible(p) {
   return false;
 }
 
+// Returns language-specific field, falling back to original
+function getField(post, field) {
+  return post[field+'_'+lang] || post[field] || '';
+}
+
 function renderPosts() {
   const c = document.getElementById('posts-container');
   c.innerHTML = '';
@@ -897,6 +916,13 @@ function renderPosts() {
     card.className = 'post-card' + (st==='draft'?' is-draft':'') + (st==='scheduled'?' is-scheduled':'');
     card.dataset.key = post._key;
 
+    // Use translated fields if available
+    const title   = getField(post, 'title');
+    const preview = getField(post, 'preview');
+    const body    = getField(post, 'body');
+    const isTranslated = post.hasTranslation && post[`title_${lang}`];
+    const transNote = isTranslated ? `<span class="translation-notice">🌐</span>` : '';
+
     let statusBadge = '';
     if (isAdmin && st === 'draft')     statusBadge = `<span class="post-status-badge draft">Utkast</span>`;
     if (isAdmin && st === 'scheduled') statusBadge = `<span class="post-status-badge scheduled">Planlagt ${post.publishAt}</span>`;
@@ -911,9 +937,9 @@ function renderPosts() {
         ${post.tag?`<span class="post-tag">${post.tag}</span>`:''}
         ${statusBadge}
       </div>
-      <h3 class="post-title">${post.title}</h3>
-      <p class="post-preview">${post.preview}</p>
-      <div class="post-body">${post.body}</div>
+      <h3 class="post-title">${title}${transNote}</h3>
+      <p class="post-preview">${preview}</p>
+      <div class="post-body">${body}</div>
       <div class="read-toggle">${tr('read_entry')}</div>
     `;
     card.addEventListener('click', () => togglePost(card));
@@ -954,11 +980,13 @@ function openPostModal(editKey) {
     document.getElementById('new-body').value    = p.body.replace(/<br\s*\/?>/gi,'\n').replace(/<[^>]+>/g,'');
     document.getElementById('new-status').value  = postStatus(p);
     document.getElementById('new-publish-at').value = p.publishAt||'';
+    document.getElementById('new-orig-lang').value  = p.originalLang||'no';
   } else {
     ['new-title','new-tag','new-preview','new-body'].forEach(id=>document.getElementById(id).value='');
-    document.getElementById('new-date').value   = new Date().toISOString().split('T')[0];
-    document.getElementById('new-status').value = 'published';
-    document.getElementById('new-publish-at').value = '';
+    document.getElementById('new-date').value        = new Date().toISOString().split('T')[0];
+    document.getElementById('new-status').value      = 'published';
+    document.getElementById('new-publish-at').value  = '';
+    document.getElementById('new-orig-lang').value   = lang; // default to current UI language
   }
   toggleScheduleField();
   openModal('post-modal');
@@ -974,6 +1002,7 @@ function submitPost() {
   const preview   = document.getElementById('new-preview').value.trim();
   const body      = document.getElementById('new-body').value.trim().replace(/\n/g,'<br>');
   const status    = document.getElementById('new-status').value;
+  const origLang  = document.getElementById('new-orig-lang').value;
   const publishAt = status==='scheduled' ? document.getElementById('new-publish-at').value : null;
   const isDraft   = status !== 'published';
   const editKey   = document.getElementById('edit-key').value;
@@ -981,7 +1010,16 @@ function submitPost() {
   document.getElementById('post-submit-btn').disabled = true;
 
   const maxOrder = posts.length ? Math.max(...posts.map(p=>p.order||0)) : 0;
-  const postData = { title, date, tag, preview:preview||title, body, draft:isDraft, publishAt, order: editKey ? (posts.find(p=>p._key===editKey)||{}).order||0 : maxOrder+1 };
+  // Store original text under language-keyed fields so translation can coexist
+  const postData = {
+    title, date, tag, preview:preview||title, body,
+    [`title_${origLang}`]: title,
+    [`preview_${origLang}`]: preview||title,
+    [`body_${origLang}`]: body,
+    originalLang: origLang,
+    draft: isDraft, publishAt,
+    order: editKey ? (posts.find(p=>p._key===editKey)||{}).order||0 : maxOrder+1
+  };
 
   if (editKey) {
     set(ref(db,'posts/'+editKey), {...postData,_key:editKey})
@@ -1054,15 +1092,21 @@ function renderEntriesTab() {
     const fmt = new Date(p.date+'T00:00:00').toLocaleDateString(locale,{day:'numeric',month:'short',year:'numeric'});
     const badgeClass = st==='published'?'pub':st==='draft'?'dft':'sch';
     const badgeText  = st==='published'?'Publisert':st==='draft'?'Utkast':'Planlagt';
+    const hasTrans   = p.hasTranslation;
+    const origLang   = p.originalLang||'no';
+    const targetLang = origLang==='no'?'en':'no';
+    const transLabel = origLang==='no'?'→ EN':'→ NO';
     return `<div class="ap-entry-row" draggable="true" data-key="${p._key}" data-order="${p.order??i}"
         ondragstart="apDragStart(event)" ondragover="apDragOver(event)" ondrop="apDrop(event)" ondragleave="apDragLeave(event)">
       <span class="ap-drag-handle">≡</span>
       <div class="ap-entry-info">
         <div class="ap-entry-title">${p.title}</div>
-        <div class="ap-entry-meta">${fmt}${p.tag?' · '+p.tag:''}</div>
+        <div class="ap-entry-meta">${fmt}${p.tag?' · '+p.tag:''} · Originalspråk: ${origLang.toUpperCase()}</div>
       </div>
       <span class="ap-badge ${badgeClass}">${badgeText}</span>
+      ${hasTrans?`<span class="ap-badge trans">🌐 Oversatt</span>`:''}
       <div class="ap-entry-actions">
+        <button class="ap-action-btn" id="trans-btn-${p._key}" onclick="translatePost('${p._key}',this)">${transLabel} Oversett</button>
         <button class="ap-action-btn" onclick="closeAdminPanel();openPostModal('${p._key}')">Rediger</button>
         <button class="ap-action-btn del" onclick="apDeletePost('${p._key}')">Slett</button>
       </div>
@@ -1293,6 +1337,67 @@ function closeIfOverlay(e,id) { if(e.target===document.getElementById(id)) close
   resize(); init(); draw();
   window.addEventListener('resize',()=>{resize();init();});
 })();
+
+// ══════════════════════════════════════════════════════
+//  AUTO-TRANSLATION (Google Translate free API)
+// ══════════════════════════════════════════════════════
+
+// Translates plain text via Google's free endpoint
+async function translateText(text, from, to) {
+  if (!text || !text.trim()) return text;
+  const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${from}&tl=${to}&dt=t&q=${encodeURIComponent(text)}`;
+  const r = await fetch(url);
+  const d = await r.json();
+  return d[0].map(x => x[0]).join('');
+}
+
+// Translates HTML-containing text by protecting tags with placeholders
+async function translateHtml(html, from, to) {
+  if (!html || !html.trim()) return html;
+  const tags = [];
+  const stripped = html.replace(/<[^>]+>/g, m => { tags.push(m); return `[[T${tags.length-1}]]`; });
+  const translated = await translateText(stripped, from, to);
+  return translated.replace(/\[\[T(\d+)\]\]/g, (_, i) => tags[parseInt(i)] || '');
+}
+
+// Main translate function — called from admin panel entries tab
+async function translatePost(postKey, btn) {
+  const post = posts.find(p => p._key === postKey);
+  if (!post) return;
+
+  const src = post.originalLang || 'no';
+  const tgt = src === 'no' ? 'en' : 'no';
+
+  if (btn) { btn.classList.add('translating'); btn.disabled = true; }
+  toast(tgt === 'en' ? 'Oversetter til engelsk…' : 'Oversetter til norsk…');
+
+  try {
+    const [titleT, previewT, bodyT] = await Promise.all([
+      translateText(post.title,   src, tgt),
+      translateText(post.preview, src, tgt),
+      translateHtml(post.body,    src, tgt)
+    ]);
+
+    const { ref, db, update } = window._fb;
+    const upd = {
+      [`posts/${postKey}/title_${src}`]:   post.title,
+      [`posts/${postKey}/preview_${src}`]: post.preview,
+      [`posts/${postKey}/body_${src}`]:    post.body,
+      [`posts/${postKey}/title_${tgt}`]:   titleT,
+      [`posts/${postKey}/preview_${tgt}`]: previewT,
+      [`posts/${postKey}/body_${tgt}`]:    bodyT,
+      [`posts/${postKey}/hasTranslation`]: true,
+      [`posts/${postKey}/originalLang`]:   src
+    };
+    await update(ref(db, '/'), upd);
+    toast('Oversettelse lagret ✓');
+  } catch(e) {
+    console.error(e);
+    toast('Oversettelse feilet — sjekk internettforbindelsen.', true);
+  } finally {
+    if (btn) { btn.classList.remove('translating'); btn.disabled = false; }
+  }
+}
 
 // ══════════════════════════════════════════════════════
 //  THEME (light / dark)
