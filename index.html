@@ -554,12 +554,63 @@ body.light #cursor-glow { background: radial-gradient(circle,rgba(154,111,26,0.0
 .clock-date { font-family:'Cinzel',serif; font-size:0.68rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--text-muted); }
 .clock-divider { width:60px; height:1px; background:linear-gradient(to right,transparent,var(--gold-dim),transparent); margin:0.4rem 0; }
 
+/* ══ LOADING SPLASH ══ */
+#splash { position:fixed; inset:0; z-index:1000; background:var(--ink); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.2rem; transition:opacity 0.9s ease, visibility 0.9s ease; }
+#splash.hidden { opacity:0; visibility:hidden; pointer-events:none; }
+.splash-eye { width:96px; height:96px; filter:drop-shadow(0 0 32px rgba(201,168,76,0.65)); animation:eye-pulse 2s ease-in-out infinite; }
+.splash-title { font-family:'Cinzel Decorative',serif; font-size:2rem; color:var(--gold); letter-spacing:0.1em; }
+.splash-sub { font-family:'Cinzel',serif; font-size:0.63rem; letter-spacing:0.32em; text-transform:uppercase; color:var(--text-muted); }
+.splash-bar { width:140px; height:1px; background:var(--border); overflow:hidden; margin-top:0.25rem; }
+.splash-bar::after { content:''; display:block; height:100%; width:50%; background:linear-gradient(to right,transparent,var(--gold),transparent); animation:splash-scan 1.3s ease-in-out infinite; }
+@keyframes splash-scan { 0%{transform:translateX(-200%);}100%{transform:translateX(400%);} }
+
+/* ══ SEARCH ══ */
+.search-wrap { display:flex; align-items:center; gap:0.75rem; margin-bottom:1.5rem; }
+.search-input { flex:1; background:var(--ink2); border:1px solid var(--border); border-radius:2px; color:var(--text); font-family:'EB Garamond',serif; font-size:1rem; padding:0.6rem 1rem 0.6rem 2.4rem; outline:none; transition:border-color 0.3s,box-shadow 0.3s; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238e84a0' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:0.75rem center; }
+.search-input:focus { border-color:var(--gold-dim); box-shadow:0 0 0 3px rgba(201,168,76,0.07); }
+.search-input::placeholder { color:var(--text-muted); }
+.search-clear { background:none; border:1px solid transparent; color:var(--text-muted); cursor:pointer; font-size:0.8rem; width:28px; height:28px; border-radius:2px; display:none; align-items:center; justify-content:center; transition:all 0.2s; flex-shrink:0; }
+.search-clear.visible { display:flex; }
+.search-clear:hover { color:var(--gold); border-color:var(--border); }
+.search-count { font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.15em; color:var(--text-muted); white-space:nowrap; }
+body.light .search-input { background-color:#fff; }
+
+/* ══ POST IMAGE ══ */
+.post-img-wrap { margin:-2rem -2rem 1.5rem; height:210px; overflow:hidden; border-bottom:1px solid var(--border); }
+.post-img-wrap img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.6s ease; }
+.post-card:hover .post-img-wrap img { transform:scale(1.04); }
+
+/* ══ POST BOTTOM ROW ══ */
+.post-bottom-row { display:flex; align-items:center; justify-content:space-between; margin-top:1rem; }
+.read-toggle { margin-top:0; }
+.post-share-btn { background:none; border:1px solid transparent; color:var(--text-muted); font-family:'Cinzel',serif; font-size:0.55rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.22rem 0.65rem; cursor:pointer; border-radius:2px; transition:all 0.22s; display:flex; align-items:center; gap:0.3rem; }
+.post-share-btn:hover { border-color:var(--border); color:var(--gold); background:var(--gold-glow); }
+.post-share-btn.copied { color:var(--green-fg) !important; border-color:var(--green-border) !important; }
+
+/* ══ BACK TO TOP ══ */
+#back-to-top { position:fixed; bottom:5.5rem; right:2rem; z-index:150; width:40px; height:40px; background:var(--ink2); border:1px solid var(--border); color:var(--gold); border-radius:2px; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:1.1rem; opacity:0; transform:translateY(16px); transition:opacity 0.3s,transform 0.35s cubic-bezier(0.34,1.3,0.64,1),border-color 0.3s,background 0.3s; pointer-events:none; }
+#back-to-top.visible { opacity:1; transform:translateY(0); pointer-events:auto; }
+#back-to-top:hover { background:var(--gold-glow); border-color:var(--gold-dim); transform:translateY(-2px) !important; }
+body.light #back-to-top { background:#fff; box-shadow:0 2px 12px rgba(0,0,0,0.08); }
+
+/* ══ PREVIEW OVERLAY ══ */
+.preview-overlay { display:none; position:fixed; inset:0; z-index:400; background:rgba(7,6,15,0.94); backdrop-filter:blur(12px); overflow-y:auto; padding:3rem 2rem 4rem; }
+.preview-overlay.open { display:block; animation:fade-in 0.3s ease; }
+.preview-inner { max-width:760px; margin:0 auto; }
+.preview-bar { display:flex; align-items:center; justify-content:space-between; margin-bottom:2rem; padding-bottom:1rem; border-bottom:1px solid var(--border); }
+.preview-label { font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold); display:flex; align-items:center; gap:0.6rem; }
+.preview-label::before { content:'◈'; font-size:0.6rem; }
+.preview-card { background:var(--ink2); border:1px solid var(--border); border-radius:2px; overflow:hidden; }
+.preview-card-body { padding:2rem; }
+.field-hint { font-size:0.8rem; color:var(--text-muted); margin-top:0.3rem; font-style:italic; }
+
 @media(max-width:640px) {
   nav { padding:0.8rem 1rem; }
   .nav-links { display:none; }
   .site-wrap { padding:0 1.1rem; }
   .modal { padding:1.75rem 1.2rem; }
   .post-card { padding:1.2rem 1.2rem 1rem; }
+  .post-img-wrap { margin:-1.2rem -1.2rem 1.2rem; }
   #about .about-card { padding:1.5rem; }
   .ap-export-grid { grid-template-columns:1fr; }
   .ap-pane { padding:1.5rem 1rem; }
@@ -569,6 +620,26 @@ body.light #cursor-glow { background: radial-gradient(circle,rgba(154,111,26,0.0
 <body>
 <div id="scroll-progress"></div>
 <div id="cursor-glow"></div>
+
+<!-- LOADING SPLASH -->
+<div id="splash">
+  <svg class="splash-eye" viewBox="0 0 120 120" fill="none">
+    <path d="M10 60 Q60 10 110 60 Q60 110 10 60 Z" fill="rgba(201,168,76,0.07)" stroke="#c9a84c" stroke-width="1.5"/>
+    <circle cx="60" cy="60" r="20" fill="rgba(90,63,160,0.25)" stroke="#c9a84c" stroke-width="1.5"/>
+    <circle cx="60" cy="60" r="9" fill="rgba(201,168,76,0.3)"/>
+    <circle cx="60" cy="60" r="4" fill="#c9a84c"/>
+    <circle cx="55" cy="55" r="2.5" fill="rgba(255,255,255,0.6)"/>
+    <path d="M60 38 L75 65 L45 65 Z" fill="none" stroke="rgba(201,168,76,0.5)" stroke-width="0.8"/>
+    <line x1="60" y1="6" x2="60" y2="18" stroke="#c9a84c" stroke-width="1.2" opacity="0.5"/>
+    <line x1="60" y1="102" x2="60" y2="114" stroke="#c9a84c" stroke-width="1.2" opacity="0.5"/>
+  </svg>
+  <div class="splash-title">Third Eye</div>
+  <div class="splash-sub" id="splash-sub">Åpner det tredje øyet…</div>
+  <div class="splash-bar"></div>
+</div>
+
+<!-- BACK TO TOP -->
+<button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Tilbake til topp">↑</button>
 <canvas id="bg-canvas"></canvas>
 <svg id="geo-svg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" viewBox="0 0 800 800">
   <g stroke="#c9a84c" fill="none" stroke-width="0.8">
@@ -674,6 +745,11 @@ body.light #cursor-glow { background: radial-gradient(circle,rgba(154,111,26,0.0
       <div class="status-dot"></div>
       <span id="status-text"></span>
     </div>
+    <div class="search-wrap">
+      <input class="search-input" id="search-input" placeholder="Søk i oppføringer…" oninput="filterPosts(this.value)">
+      <button class="search-clear" id="search-clear" onclick="clearSearch()" title="Tøm søk">✕</button>
+      <span class="search-count" id="search-count"></span>
+    </div>
     <div id="posts-container"></div>
   </section>
 </div>
@@ -688,6 +764,19 @@ body.light #cursor-glow { background: radial-gradient(circle,rgba(154,111,26,0.0
   </div><br>
   <span data-i18n="footer_text"></span>
 </footer>
+
+<!-- PREVIEW OVERLAY -->
+<div id="preview-overlay" class="preview-overlay" onclick="closeIfOverlay(event,'preview-overlay')">
+  <div class="preview-inner">
+    <div class="preview-bar">
+      <span class="preview-label">Forhåndsvisning</span>
+      <button class="btn-cancel" onclick="document.getElementById('preview-overlay').classList.remove('open')">✕ Lukk</button>
+    </div>
+    <div class="preview-card">
+      <div id="preview-content"></div>
+    </div>
+  </div>
+</div>
 
 <!-- ═══════════════════════ ADMIN PANEL ═══════════════════════ -->
 <div id="admin-panel" class="ap-overlay">
@@ -837,6 +926,11 @@ body.light #cursor-glow { background: radial-gradient(circle,rgba(154,111,26,0.0
     <div class="field"><label data-i18n="field_preview"></label><input type="text" id="new-preview"></div>
     <div class="field"><label data-i18n="field_body"></label>   <textarea id="new-body"></textarea></div>
     <div class="field">
+      <label>Forsidebilde (URL, valgfritt)</label>
+      <input type="url" id="new-image-url" placeholder="https://eksempel.com/bilde.jpg">
+      <div class="field-hint">Lim inn lenke til et bilde — vises øverst i innlegget</div>
+    </div>
+    <div class="field">
       <label>Status</label>
       <select id="new-status" onchange="toggleScheduleField()">
         <option value="published">Publisert</option>
@@ -857,6 +951,7 @@ body.light #cursor-glow { background: radial-gradient(circle,rgba(154,111,26,0.0
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal('post-modal')" data-i18n="btn_cancel"></button>
+      <button class="btn-cancel" onclick="previewPost()" style="border-color:rgba(201,168,76,0.3);color:var(--gold-dim);">◈ Forhåndsvis</button>
       <button class="btn-submit" id="post-submit-btn" onclick="submitPost()"></button>
     </div>
   </div>
@@ -1014,8 +1109,9 @@ function initFirebase() {
     const d = snap.val();
     posts = d ? Object.entries(d).map(([k,v]) => ({...v, _key:k})) : [];
     setStatus('synced'); renderPosts();
+    hideSplash();
     if (document.getElementById('admin-panel').classList.contains('open')) refreshAdminPanel();
-  }, () => setStatus('error'));
+  }, () => { setStatus('error'); hideSplash(); });
 
   onValue(settingsRef, snap => {
     siteSettings = snap.val() || {};
@@ -1134,29 +1230,46 @@ function renderPosts() {
   c.innerHTML = '';
   const locale = tr('date_locale');
   const visible = posts.filter(p => isAdmin || isVisible(p));
-  const sorted  = [...visible].sort((a,b) => (a.order??0)-(b.order??0) || new Date(b.date)-new Date(a.date));
+  let sorted = [...visible].sort((a,b) => (a.order??0)-(b.order??0) || new Date(b.date)-new Date(a.date));
 
-  if (!sorted.length) { c.innerHTML = `<div class="empty-state">${tr('empty_state')}</div>`; return; }
+  // Search filtering
+  if (searchQuery) {
+    sorted = sorted.filter(p => {
+      const hay = [getField(p,'title'), getField(p,'preview'), getField(p,'body').replace(/<[^>]+>/g,''), p.tag||''].join(' ').toLowerCase();
+      return hay.includes(searchQuery);
+    });
+  }
+
+  // Update search count
+  const countEl = document.getElementById('search-count');
+  if (countEl) countEl.textContent = searchQuery ? `${sorted.length} ${sorted.length===1?'treff':'treff'}` : '';
+
+  if (!sorted.length) {
+    c.innerHTML = `<div class="empty-state">${searchQuery ? '🔍 Ingen oppføringer samsvarer med søket.' : tr('empty_state')}</div>`;
+    applyPostStagger(); return;
+  }
 
   sorted.forEach(post => {
     const fmt  = new Date(post.date+'T00:00:00').toLocaleDateString(locale,{day:'numeric',month:'long',year:'numeric'});
     const st   = postStatus(post);
     const card = document.createElement('article');
     card.className = 'post-card' + (st==='draft'?' is-draft':'') + (st==='scheduled'?' is-scheduled':'');
+    card.id = 'post-' + post._key;
     card.dataset.key = post._key;
 
-    // Use translated fields if available
     const title   = getField(post, 'title');
     const preview = getField(post, 'preview');
     const body    = getField(post, 'body');
     const isTranslated = post.hasTranslation && post[`title_${lang}`];
     const transNote = isTranslated ? `<span class="translation-notice">🌐</span>` : '';
+    const imageHtml = post.imageUrl ? `<div class="post-img-wrap"><img src="${post.imageUrl}" alt="${title}" loading="lazy"></div>` : '';
 
     let statusBadge = '';
     if (isAdmin && st === 'draft')     statusBadge = `<span class="post-status-badge draft">Utkast</span>`;
     if (isAdmin && st === 'scheduled') statusBadge = `<span class="post-status-badge scheduled">Planlagt ${post.publishAt}</span>`;
 
     card.innerHTML = `
+      ${imageHtml}
       <div class="card-admin-bar${isAdmin?' visible':''}">
         <button class="card-btn"     onclick="editPost(event,'${post._key}')">${tr('btn_edit')}</button>
         <button class="card-btn del" onclick="askDelete(event,'${post._key}')">${tr('btn_del')}</button>
@@ -1169,7 +1282,10 @@ function renderPosts() {
       <h3 class="post-title">${title}${transNote}</h3>
       <p class="post-preview">${preview}</p>
       <div class="post-body">${body}</div>
-      <div class="read-toggle">${tr('read_entry')}</div>
+      <div class="post-bottom-row">
+        <div class="read-toggle">${tr('read_entry')}</div>
+        <button class="post-share-btn" id="share-${post._key}" onclick="sharePost(event,'${post._key}',\`${title.replace(/`/g,"'")}\`)">⬆ Del</button>
+      </div>
     `;
     card.addEventListener('click', () => togglePost(card));
     c.appendChild(card);
@@ -1203,20 +1319,21 @@ function openPostModal(editKey) {
 
   if (isEdit) {
     const p = posts.find(x=>x._key===editKey);
-    document.getElementById('new-title').value   = p.title;
-    document.getElementById('new-date').value    = p.date;
-    document.getElementById('new-tag').value     = p.tag||'';
-    document.getElementById('new-preview').value = p.preview;
-    document.getElementById('new-body').value    = p.body.replace(/<br\s*\/?>/gi,'\n').replace(/<[^>]+>/g,'');
-    document.getElementById('new-status').value  = postStatus(p);
-    document.getElementById('new-publish-at').value = p.publishAt||'';
-    document.getElementById('new-orig-lang').value  = p.originalLang||'no';
+    document.getElementById('new-title').value     = p.title;
+    document.getElementById('new-date').value      = p.date;
+    document.getElementById('new-tag').value       = p.tag||'';
+    document.getElementById('new-preview').value   = p.preview;
+    document.getElementById('new-body').value      = p.body.replace(/<br\s*\/?>/gi,'\n').replace(/<[^>]+>/g,'');
+    document.getElementById('new-image-url').value = p.imageUrl||'';
+    document.getElementById('new-status').value    = postStatus(p);
+    document.getElementById('new-publish-at').value= p.publishAt||'';
+    document.getElementById('new-orig-lang').value = p.originalLang||'no';
   } else {
-    ['new-title','new-tag','new-preview','new-body'].forEach(id=>document.getElementById(id).value='');
+    ['new-title','new-tag','new-preview','new-body','new-image-url'].forEach(id=>document.getElementById(id).value='');
     document.getElementById('new-date').value        = new Date().toISOString().split('T')[0];
     document.getElementById('new-status').value      = 'published';
     document.getElementById('new-publish-at').value  = '';
-    document.getElementById('new-orig-lang').value   = lang; // default to current UI language
+    document.getElementById('new-orig-lang').value   = lang;
   }
   toggleScheduleField();
   openModal('post-modal');
@@ -1240,9 +1357,9 @@ function submitPost() {
   document.getElementById('post-submit-btn').disabled = true;
 
   const maxOrder = posts.length ? Math.max(...posts.map(p=>p.order||0)) : 0;
-  // Store original text under language-keyed fields so translation can coexist
+  const imageUrl  = document.getElementById('new-image-url').value.trim() || null;
   const postData = {
-    title, date, tag, preview:preview||title, body,
+    title, date, tag, preview:preview||title, body, imageUrl,
     [`title_${origLang}`]: title,
     [`preview_${origLang}`]: preview||title,
     [`body_${origLang}`]: body,
@@ -1699,6 +1816,103 @@ async function translatePost(postKey, btn) {
 }
 
 // ══════════════════════════════════════════════════════
+//  LOADING SPLASH
+// ══════════════════════════════════════════════════════
+let _splashDone = false;
+function hideSplash() {
+  if (_splashDone) return;
+  _splashDone = true;
+  const s = document.getElementById('splash');
+  if (s) { s.classList.add('hidden'); setTimeout(()=>s.remove(), 1000); }
+}
+setTimeout(hideSplash, 4000); // hard timeout fallback
+
+// ══════════════════════════════════════════════════════
+//  SEARCH
+// ══════════════════════════════════════════════════════
+let searchQuery = '';
+function filterPosts(q) {
+  searchQuery = q.toLowerCase().trim();
+  const clearBtn = document.getElementById('search-clear');
+  if (clearBtn) clearBtn.classList.toggle('visible', q.length > 0);
+  renderPosts();
+}
+function clearSearch() {
+  searchQuery = '';
+  const inp = document.getElementById('search-input');
+  if (inp) inp.value = '';
+  const clearBtn = document.getElementById('search-clear');
+  if (clearBtn) clearBtn.classList.remove('visible');
+  const countEl = document.getElementById('search-count');
+  if (countEl) countEl.textContent = '';
+  renderPosts();
+}
+
+// ══════════════════════════════════════════════════════
+//  SHARE
+// ══════════════════════════════════════════════════════
+function sharePost(e, key, title) {
+  e.stopPropagation();
+  const url = window.location.href.split('#')[0] + '#post-' + key;
+  const btn = document.getElementById('share-' + key);
+  const doShare = () => {
+    if (btn) { btn.textContent = '✓ Kopiert'; btn.classList.add('copied'); setTimeout(()=>{ btn.textContent='⬆ Del'; btn.classList.remove('copied'); },2000); }
+  };
+  if (navigator.share) {
+    navigator.share({ title, url }).catch(()=>{});
+  } else {
+    navigator.clipboard.writeText(url).then(doShare).catch(()=>{
+      // Fallback for older browsers
+      const ta = document.createElement('textarea');
+      ta.value = url; ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      doShare();
+    });
+  }
+}
+
+// ══════════════════════════════════════════════════════
+//  POST PREVIEW
+// ══════════════════════════════════════════════════════
+function previewPost() {
+  const title    = document.getElementById('new-title').value   || 'Tittel';
+  const date     = document.getElementById('new-date').value    || new Date().toISOString().split('T')[0];
+  const tag      = document.getElementById('new-tag').value;
+  const preview  = document.getElementById('new-preview').value;
+  const body     = document.getElementById('new-body').value.trim().replace(/\n/g,'<br>');
+  const imageUrl = document.getElementById('new-image-url').value;
+  const locale   = tr('date_locale');
+  const fmt = new Date(date+'T00:00:00').toLocaleDateString(locale,{day:'numeric',month:'long',year:'numeric'});
+
+  document.getElementById('preview-content').innerHTML = `
+    ${imageUrl ? `<img src="${imageUrl}" alt="${title}" style="width:100%;height:240px;object-fit:cover;display:block;border-bottom:1px solid var(--border);">` : ''}
+    <div class="preview-card-body">
+      <div class="post-meta">
+        <span class="post-date">${fmt}</span>
+        ${tag ? `<span class="post-tag">${tag}</span>` : ''}
+        <span class="post-status-badge draft">Forhåndsvisning</span>
+      </div>
+      <h3 class="post-title" style="padding-right:0;">${title}</h3>
+      <p class="post-preview">${preview}</p>
+      <div class="post-body" style="display:block;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border);">${body || '<em style="color:var(--text-muted)">Ingen innhold ennå…</em>'}</div>
+    </div>
+  `;
+  document.getElementById('preview-overlay').classList.add('open');
+}
+
+// ══════════════════════════════════════════════════════
+//  BACK TO TOP
+// ══════════════════════════════════════════════════════
+function initBackToTop() {
+  const btn = document.getElementById('back-to-top');
+  if (!btn) return;
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 500);
+  }, { passive:true });
+}
+
+// ══════════════════════════════════════════════════════
 //  THEME (light / dark)
 // ══════════════════════════════════════════════════════
 let theme = localStorage.getItem('te_theme') || 'dark';
@@ -1828,6 +2042,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCursorGlow();
   initScrollReveal();
   initParallax();
+  initBackToTop();
   document.addEventListener('keydown', e => {
     if (e.key==='Escape') {
       ['admin-modal','post-modal','delete-modal'].forEach(closeModal);
