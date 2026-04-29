@@ -281,6 +281,119 @@ footer .eye-small { display:inline-block; margin-bottom:1rem; opacity:0.35; }
 @keyframes spin-icon { to{transform:rotate(360deg);} }
 .post-card .translation-notice { display:inline-block; font-family:'Cinzel',serif; font-size:0.52rem; letter-spacing:0.1em; color:rgba(123,189,224,0.7); margin-left:0.5rem; vertical-align:middle; }
 
+/* ══════════════════════════════════════════════════════
+   ENHANCED INTERACTIONS & ANIMATIONS
+══════════════════════════════════════════════════════ */
+
+/* Scroll progress bar */
+#scroll-progress { position:fixed; top:0; left:0; height:2px; z-index:201; width:0%; pointer-events:none; background:linear-gradient(to right,var(--gold-dim),var(--gold),#e8c96e); transition:width 0.08s linear; }
+
+/* Cursor ambient glow */
+#cursor-glow { position:fixed; width:520px; height:520px; border-radius:50%; pointer-events:none; z-index:0; transform:translate(-50%,-50%); background:radial-gradient(circle,rgba(201,168,76,0.055) 0%,transparent 68%); opacity:0; transition:opacity 0.5s; }
+body.light #cursor-glow { background:radial-gradient(circle,rgba(180,130,30,0.07) 0%,transparent 65%); }
+
+/* Nav — compact on scroll + link underlines */
+nav { transition:padding 0.4s cubic-bezier(0.4,0,0.2,1), background 0.3s !important; }
+nav.compact { padding:0.55rem 2.5rem; }
+.nav-links a { position:relative; }
+.nav-links a::after { content:''; position:absolute; bottom:-3px; left:50%; width:0; height:1px; background:var(--gold); transition:width 0.35s cubic-bezier(0.4,0,0.2,1), left 0.35s cubic-bezier(0.4,0,0.2,1); }
+.nav-links a:hover::after { width:100%; left:0; }
+
+/* Logo hover */
+.nav-logo:hover svg { filter:drop-shadow(0 0 8px rgba(201,168,76,0.6)); }
+.nav-logo { transition:opacity 0.2s; }
+.nav-logo:hover { opacity:0.9; }
+
+/* Theme button spin */
+.theme-btn { transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1) !important; }
+.theme-btn:hover { transform:rotate(22deg) scale(1.15); border-color:var(--gold-dim); color:var(--gold); }
+
+/* Post cards — lift + glow */
+.post-card { transform:translateY(0); transition:border-color 0.35s, background 0.35s, transform 0.4s cubic-bezier(0.34,1.3,0.64,1), box-shadow 0.4s !important; }
+.post-card:hover { transform:translateY(-4px); box-shadow:0 16px 48px rgba(201,168,76,0.1), 0 4px 12px rgba(0,0,0,0.2); }
+.post-card.expanded { transform:translateY(-2px); box-shadow:0 10px 36px rgba(201,168,76,0.09); }
+body.light .post-card:hover { box-shadow:0 10px 36px rgba(139,100,30,0.13); }
+
+/* Scroll reveal */
+.reveal-hidden { opacity:0; transform:translateY(30px); transition:opacity 0.65s cubic-bezier(0.4,0,0.2,1), transform 0.65s cubic-bezier(0.34,1.2,0.64,1) !important; }
+.reveal-visible { opacity:1 !important; transform:translateY(0) !important; }
+.post-card.reveal-hidden { transform:translateY(30px) !important; }
+.post-card.reveal-visible { transform:translateY(0) !important; }
+.post-card.reveal-visible:hover { transform:translateY(-4px) !important; }
+
+/* Stagger delays */
+.sd-1{transition-delay:0.06s!important;} .sd-2{transition-delay:0.12s!important;}
+.sd-3{transition-delay:0.18s!important;} .sd-4{transition-delay:0.24s!important;}
+.sd-5{transition-delay:0.3s!important;}  .sd-6{transition-delay:0.36s!important;}
+
+/* Buttons — lift on hover, press on active */
+.btn-add:hover, .btn-submit:hover, .btn-panel:hover { transform:translateY(-1px); }
+.btn-add:active, .btn-submit:active, .btn-panel:active, .admin-lock-btn:active, .btn-cancel:active { transform:scale(0.95) !important; }
+.btn-add, .btn-submit, .btn-panel, .admin-lock-btn, .btn-cancel, .btn-danger { transition:all 0.25s cubic-bezier(0.4,0,0.2,1) !important; }
+.card-btn { transition:all 0.22s cubic-bezier(0.4,0,0.2,1) !important; }
+.card-btn:hover { transform:translateY(-1px); }
+.card-btn:active { transform:scale(0.93) !important; }
+
+/* Sigil badges */
+.sigil-badge { transition:all 0.3s cubic-bezier(0.34,1.3,0.64,1) !important; cursor:default; }
+.sigil-badge:hover { background:rgba(90,63,160,0.38); border-color:rgba(90,63,160,0.65); transform:translateY(-2px) scale(1.04); box-shadow:0 4px 18px rgba(90,63,160,0.25); }
+
+/* About card glow on hover */
+#about .about-card { transition:border-color 0.45s, box-shadow 0.45s !important; }
+#about .about-card:hover { border-color:rgba(201,168,76,0.45); box-shadow:0 0 48px rgba(201,168,76,0.07), inset 0 0 24px rgba(201,168,76,0.025); }
+
+/* Rune divider */
+.rune-divider { transition:color 0.35s, letter-spacing 0.35s !important; cursor:default; }
+.rune-divider:hover { color:var(--gold); letter-spacing:0.35em; }
+
+/* Section labels */
+.section-label { transition:gap 0.3s !important; }
+.section-label:hover { gap:1rem; }
+.section-label::before { transition:width 0.35s !important; }
+.section-label:hover::before { width:32px; }
+
+/* Admin panel entries */
+.ap-entry-row { transition:border-color 0.22s, background 0.22s, transform 0.3s cubic-bezier(0.34,1.3,0.64,1) !important; }
+.ap-entry-row:hover { transform:translateX(4px); border-color:rgba(201,168,76,0.35); }
+.ap-action-btn { transition:all 0.22s cubic-bezier(0.4,0,0.2,1) !important; }
+.ap-action-btn:hover { transform:translateY(-1px); }
+.ap-action-btn:active { transform:scale(0.94) !important; }
+
+/* Stat cards */
+.ap-stat-card { transition:border-color 0.3s, background 0.3s, transform 0.35s cubic-bezier(0.34,1.3,0.64,1), box-shadow 0.35s !important; }
+.ap-stat-card:hover { transform:translateY(-3px) scale(1.02); border-color:rgba(201,168,76,0.35); box-shadow:0 8px 28px rgba(201,168,76,0.09); }
+
+/* Export cards */
+.ap-export-card { transition:border-color 0.3s, background 0.3s, transform 0.35s cubic-bezier(0.34,1.3,0.64,1), box-shadow 0.35s !important; }
+.ap-export-card:hover { transform:translateY(-5px); box-shadow:0 12px 36px rgba(201,168,76,0.1); }
+.ap-export-card:active { transform:scale(0.97) !important; }
+
+/* Admin panel tabs */
+.ap-tab { transition:all 0.22s !important; }
+.ap-tab:hover { transform:translateY(-1px); }
+
+/* Tag chips */
+.ap-tag-chip { transition:all 0.25s !important; }
+.ap-tag-chip:hover { transform:scale(1.05); border-color:rgba(90,63,160,0.55); }
+
+/* Hero eye subtle bob (replaces old pulse) */
+@keyframes eye-pulse { 
+  0%,100% { transform:translateY(0) scale(1); filter:drop-shadow(0 0 24px rgba(201,168,76,0.5)); }
+  50%      { transform:translateY(-6px) scale(1.04); filter:drop-shadow(0 0 44px rgba(201,168,76,0.85)); }
+}
+
+/* Clock subtle entrance */
+.hero-clock { animation:fade-up 1.2s cubic-bezier(0.4,0,0.2,1) 0.4s both; }
+@keyframes fade-up { from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);} }
+.hero-tagline { animation:fade-up 1s cubic-bezier(0.4,0,0.2,1) 0.2s both; }
+
+/* Post read toggle arrow bounce */
+.read-toggle { transition:color 0.3s !important; }
+.post-card:hover .read-toggle { color:var(--gold); }
+
+/* Modal entrance — snappier */
+@keyframes modal-enter { from{opacity:0;transform:scale(0.88) translateY(28px);}to{opacity:1;transform:scale(1) translateY(0);} }
+
 /* ── LIGHT MODE ── */
 body.light {
   --ink:#f0e9d8; --ink2:#faf5ea; --ink3:#f5eed9;
@@ -339,7 +452,8 @@ body.light .scroll-hint::after { background:linear-gradient(to bottom,var(--gold
 </style>
 </head>
 <body>
-
+<div id="scroll-progress"></div>
+<div id="cursor-glow"></div>
 <canvas id="bg-canvas"></canvas>
 <svg id="geo-svg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" viewBox="0 0 800 800">
   <g stroke="#c9a84c" fill="none" stroke-width="0.8">
@@ -945,6 +1059,7 @@ function renderPosts() {
     card.addEventListener('click', () => togglePost(card));
     c.appendChild(card);
   });
+  applyPostStagger();
 }
 
 function togglePost(card) {
@@ -1023,10 +1138,13 @@ function submitPost() {
 
   if (editKey) {
     set(ref(db,'posts/'+editKey), {...postData,_key:editKey})
-      .then(()=>closeModal('post-modal')).catch(()=>{document.getElementById('post-submit-btn').disabled=false;});
+      .then(() => { closeModal('post-modal'); translatePost(editKey); })
+      .catch(() => { document.getElementById('post-submit-btn').disabled = false; });
   } else {
     const nr = push(postsRef);
-    set(nr, postData).then(()=>closeModal('post-modal')).catch(()=>{document.getElementById('post-submit-btn').disabled=false;});
+    set(nr, postData)
+      .then(() => { closeModal('post-modal'); translatePost(nr.key); })
+      .catch(() => { document.getElementById('post-submit-btn').disabled = false; });
   }
 }
 
@@ -1417,6 +1535,78 @@ function toggleTheme() {
 }
 
 // ══════════════════════════════════════════════════════
+//  UI ENHANCEMENTS
+// ══════════════════════════════════════════════════════
+
+// Scroll progress bar + nav compact
+function initScrollProgress() {
+  const bar = document.getElementById('scroll-progress');
+  window.addEventListener('scroll', () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    if (max > 0) bar.style.width = (window.scrollY / max * 100) + '%';
+    document.querySelector('nav').classList.toggle('compact', window.scrollY > 80);
+  }, { passive: true });
+}
+
+// Ambient cursor glow (desktop only)
+function initCursorGlow() {
+  const glow = document.getElementById('cursor-glow');
+  if (!glow || window.matchMedia('(pointer:coarse)').matches) return;
+  let tx=window.innerWidth/2, ty=window.innerHeight/2, cx=tx, cy=ty;
+  document.addEventListener('mousemove', e => { tx=e.clientX; ty=e.clientY; glow.style.opacity='1'; }, { passive:true });
+  document.addEventListener('mouseleave', () => { glow.style.opacity='0'; });
+  (function lerp() {
+    cx += (tx-cx) * 0.07; cy += (ty-cy) * 0.07;
+    glow.style.left = Math.round(cx) + 'px';
+    glow.style.top  = Math.round(cy) + 'px';
+    requestAnimationFrame(lerp);
+  })();
+}
+
+// Scroll-triggered reveal (IntersectionObserver)
+function initScrollReveal() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('reveal-visible');
+        e.target.classList.remove('reveal-hidden');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('section, #about .about-card, .rune-divider').forEach(el => {
+    el.classList.add('reveal-hidden');
+    obs.observe(el);
+  });
+}
+
+// Staggered post card entrance
+function applyPostStagger() {
+  const cards = document.querySelectorAll('.post-card');
+  cards.forEach((card, i) => {
+    card.classList.remove('reveal-visible');
+    card.classList.add('reveal-hidden', `sd-${Math.min(i+1,6)}`);
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      card.classList.add('reveal-visible');
+    }));
+  });
+}
+
+// Hero eye parallax on mouse move
+function initParallax() {
+  if (window.matchMedia('(pointer:coarse)').matches) return;
+  const eye = document.querySelector('.eye-icon');
+  if (!eye) return;
+  eye.style.transition = 'transform 0.15s linear, filter 4s ease-in-out';
+  document.addEventListener('mousemove', e => {
+    const dx = (e.clientX / window.innerWidth  - 0.5) * 18;
+    const dy = (e.clientY / window.innerHeight - 0.5) * 14;
+    eye.style.transform = `translate(${dx}px, ${dy}px)`;
+  }, { passive: true });
+  document.addEventListener('mouseleave', () => { eye.style.transform = 'translate(0,0)'; });
+}
+
+// ══════════════════════════════════════════════════════
 //  LIVE CLOCK
 // ══════════════════════════════════════════════════════
 function startClock() {
@@ -1452,6 +1642,10 @@ document.addEventListener('DOMContentLoaded', () => {
   startClock();
   setLang(lang);
   updateAdminState();
+  initScrollProgress();
+  initCursorGlow();
+  initScrollReveal();
+  initParallax();
   document.addEventListener('keydown', e => {
     if (e.key==='Escape') {
       ['admin-modal','post-modal','delete-modal'].forEach(closeModal);
