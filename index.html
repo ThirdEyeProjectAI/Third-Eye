@@ -146,7 +146,7 @@ section { padding:5rem 0; }
 .post-card.expanded { border-color:rgba(201,168,76,0.4); background:var(--ink3); }
 .post-card.is-draft { opacity:0.55; border-style:dashed; }
 .post-card.is-scheduled::after { background:#9d8fd0; }
-.card-admin-bar { display:none; position:absolute; top:0.75rem; right:0.9rem; gap:0.4rem; z-index:10; }
+.card-admin-bar { display:none; gap:0.4rem; z-index:10; margin-top:0.85rem; padding-top:0.75rem; border-top:1px solid var(--border); }
 .card-admin-bar.visible { display:flex; }
 .card-btn { background:var(--ink3); border:1px solid var(--border); color:var(--text-muted); font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.25rem 0.65rem; cursor:pointer; border-radius:2px; transition:background 0.25s,color 0.25s,border-color 0.25s; }
 .card-btn:hover { color:var(--gold); border-color:var(--gold-dim); background:var(--gold-glow); }
@@ -2077,11 +2077,7 @@ function renderPosts() {
 
     card.innerHTML = `
       ${imageHtml}
-      <div class="card-admin-bar${isAdmin?' visible':''}">
-        <button class="card-btn"     onclick="editPost(event,'${post._key}')">${tr('btn_edit')}</button>
-        <button class="card-btn del" onclick="askDelete(event,'${post._key}')">${tr('btn_del')}</button>
-      </div>
-      <div class="post-meta">
+      <div class="post-meta" style="${isAdmin?'padding-right:0;':''}">
         <span class="post-date">${fmt}</span>
         ${post.tag?`<span class="post-tag clickable" onclick="setTagFilter(event,'${post.tag}')">${post.tag}</span>`:''}
         <span class="post-reading-time">${readTime}</span>
@@ -2100,6 +2096,10 @@ function renderPosts() {
       <div class="post-bottom-row">
         <div class="read-toggle">${tr('read_entry')}</div>
         <button class="post-share-btn" id="share-${post._key}" onclick="sharePost(event,'${post._key}',\`${title.replace(/`/g,"'")}\`)">⬆ Del</button>
+      </div>
+      <div class="card-admin-bar${isAdmin?' visible':''}">
+        <button class="card-btn"     onclick="editPost(event,'${post._key}')">${tr('btn_edit')}</button>
+        <button class="card-btn del" onclick="askDelete(event,'${post._key}')">${tr('btn_del')}</button>
       </div>
     `;
     card.addEventListener('click', () => togglePost(card));
