@@ -1723,24 +1723,48 @@ body.light #back-to-top { background:#fff; box-shadow:0 2px 12px rgba(0,0,0,0.08
 // ══════════════════════════════════════════════════════
 const T = {
   en: {
+    /* nav */
     nav_about:'About', nav_journal:'Journal',
+    /* hero */
     hero_sub:'School Project · AI Business Insights',
     hero_tagline:'Documenting the unseen intelligence shaping modern business — one interview at a time.',
     scroll_hint:'Scroll',
+    /* about */
     about_label:'The Project', about_title:'About Third Eye',
     about_p1:'<em>Third Eye</em> is a school research project exploring how artificial intelligence is reshaping the strategies, operations, and decisions of real businesses. Through direct interviews with entrepreneurs, managers, and executives, we seek patterns in how AI is being adopted — and what remains unseen.',
     about_p2:'Each entry in this journal represents a conversation, an observation, or a reflection gathered during the research process. The findings accumulate here in chronological order, building toward a living picture of AI in the business world.',
     badge1:'AI & Business', badge2:'Field Research', badge3:'Primary Interviews', badge4:'School Project',
+    /* demo day */
+    dd_label:'Event', dd_title:'AI Demo Day 2026',
+    dd_desc1:'Student teams from <strong>AIP2100 – AI in Practice</strong> at Høyskolen Kristiania have spent an entire semester interviewing Norwegian businesses about artificial intelligence. <em>Third Eye</em> is one of these teams. Now we present our findings.',
+    dd_desc2:'The programme includes student presentations, guest lectures and a debate on AI in education. This is a unique opportunity to hear what is actually happening with AI in Norwegian businesses — directly from those who have dug into it.',
+    dd_students:'Students', dd_industries:'Industries', dd_interviews:'Interviews',
+    dd_reserve:'Reserve your spot',
+    dd_widget_cta:'Visit site →',
+    dd_date:'Tuesday 2 June 2026 · 09:00–17:00',
+    dd_location:'Kirkegata 24, Oslo',
+    dd_school:'Høyskolen Kristiania',
+    /* divider / blog */
     divider_label:'✦ Journal ✦',
     blog_label:'Research Entries', blog_title:'Field Journal',
     btn_new_entry:'+ New Entry',
+    /* sort */
+    sort_label:'Sort:',
+    sort_newest:'Newest',
+    sort_popular:'Most liked',
+    /* search */
+    search_placeholder:'Search entries…',
+    search_results:'result',
+    /* status */
     status_loading:'Connecting to database…',
     status_synced:'Live — changes sync to all devices instantly',
     status_error:'Database error — check config',
+    /* admin login */
     admin_modal_title:'⚿ Admin Access',
     admin_pw_label:'Password', admin_btn_enter:'Enter',
     admin_error_wrong:'Incorrect password.',
     admin_btn_label:'⚿ Admin', admin_btn_label_on:'⚿ Admin ✓',
+    /* post modal */
     post_modal_new_title:'✦ New Journal Entry', post_modal_edit_title:'✦ Edit Entry',
     field_title:'Entry Title', field_date:'Date', field_tag:'Category / Tag',
     field_preview:'Preview', field_body:'Full Entry',
@@ -1748,31 +1772,135 @@ const T = {
     ph_preview:'A brief glimpse…', ph_body:'Write your full findings here…',
     btn_inscribe:'Inscribe Entry', btn_save:'Save Changes', btn_cancel:'Cancel',
     btn_edit:'Edit', btn_del:'Delete',
+    btn_preview_post:'◈ Preview',
+    /* post fields */
+    field_image:'Cover image (optional)',
+    field_image_hint:'URL or file — shown at the top of the entry',
+    field_image_upload:'📁 Upload from device',
+    field_status:'Status',
+    field_orig_lang:'Original language',
+    field_pub_date:'Publish date',
+    status_published:'Published', status_draft:'Draft', status_scheduled:'Scheduled',
+    /* AI summary */
+    ai_sum_label:'AI Interview Summary (optional)',
+    ai_sum_placeholder:'Paste raw transcript or interview notes here — Claude will generate a structured summary…',
+    ai_sum_btn:'✦ Generate summary with AI',
+    ai_sum_generating:'↻ Generating with Claude…',
+    ai_sum_regenerate:'✦ Regenerate',
+    ai_sum_apply:'Use as content',
+    ai_sum_apply_preview:'Use first line as preview',
+    ai_sum_short:'Paste at least 50 characters of transcript first.',
+    /* survey */
+    survey_toggle:'Add reader survey',
+    survey_question_ph:'Question, e.g: What surprised you most?',
+    survey_opt_ph:'Option',
+    survey_add_opt:'+ Add option',
+    survey_total_label:'answer', survey_total_label_pl:'answers',
+    survey_login_note:'Log in to answer',
+    /* delete */
     delete_title:'Delete Entry?', delete_body:'This entry will be permanently removed for everyone.',
+    /* post card */
     read_entry:'Read entry', close_entry:'Close',
+    btn_share:'⬆ Share', btn_like:'♥',
+    like_tooltip:'Like this entry', like_login_tooltip:'Log in to like',
     empty_state:'No entries yet.',
+    empty_search:'No entries match your search.',
+    /* tags */
+    tag_filter_label:'Filter:',
+    /* comments */
+    comments_label:'Comments',
+    comment_placeholder:'Write a comment…',
+    comment_send:'Send',
+    comment_login_prompt:'Log in to comment',
+    comment_login_btn:'Log in',
+    no_comments:'Be the first to comment.',
+    comment_loading:'Loading…',
+    comment_hidden:'Hidden by admin',
+    /* auth */
+    auth_title:'✦ User Account',
+    auth_register_tab:'Register',
+    auth_login_tab:'Log in',
+    auth_name_label:'Your name',
+    auth_email_label:'Email',
+    auth_pw_label_user:'Password',
+    auth_name_ph:'Ola Nordmann',
+    auth_email_ph:'your@email.com',
+    auth_pw_ph:'At least 6 characters',
+    auth_create_btn:'Create account',
+    auth_login_btn:'Log in',
+    auth_fill_all:'Please fill in all fields.',
+    auth_pw_short:'Password must be at least 6 characters.',
+    auth_email_taken:'This email is already in use.',
+    auth_wrong_pw:'Incorrect email or password.',
+    auth_fill_login:'Please fill in email and password.',
+    auth_welcome:'Welcome, ',
+    auth_logged_in:'Logged in ✓',
+    auth_logged_out:'Logged out',
+    /* user nav */
+    user_nav_login:'Log in',
+    /* profile */
+    profile_title:'✦ My Profile',
+    profile_name_label:'Display name',
+    profile_avatar_label:'Profile picture — choose emoji',
+    profile_avatar_url_label:'Or image URL / file',
+    profile_avatar_file_btn:'📁 File',
+    profile_notif_label:'Email notifications for new posts',
+    profile_notif_hint:'Receive an email when admin publishes new content',
+    profile_logout_btn:'Log out',
+    profile_close_btn:'Close',
+    profile_save_btn:'Save profile',
+    profile_saved:'Profile saved ✓',
+    /* related posts */
+    related_label:'Related entries',
+    /* back to top */
+    back_to_top:'Back to top',
+    /* footer */
     footer_text:'THIRD EYE · AI BUSINESS INTERVIEWS · SCHOOL PROJECT',
     date_locale:'en-GB'
   },
   no: {
+    /* nav */
     nav_about:'Om', nav_journal:'Dagbok',
+    /* hero */
     hero_sub:'Skoleprosjekt · AI-forretningsinnsikt',
     hero_tagline:'Dokumenterer den usynlige intelligensen som former moderne næringsliv — ett intervju om gangen.',
     scroll_hint:'Bla ned',
+    /* about */
     about_label:'Prosjektet', about_title:'Om Third Eye',
     about_p1:'<em>Third Eye</em> er et skoleprosjekt som utforsker hvordan kunstig intelligens omformer strategiene, driften og beslutningene til virkelige bedrifter. Gjennom direkte intervjuer med gründere, ledere og direktører søker vi mønstre i hvordan AI tas i bruk — og hva som forblir usynlig.',
     about_p2:'Hver oppføring i denne dagboken representerer en samtale, en observasjon eller en refleksjon samlet under forskningsprosessen. Funnene samler seg her i kronologisk rekkefølge og bygger mot et levende bilde av AI i næringslivet.',
     badge1:'AI & Næringsliv', badge2:'Feltforskning', badge3:'Primærintervjuer', badge4:'Skoleprosjekt',
+    /* demo day */
+    dd_label:'Arrangement', dd_title:'AI Demo Day 2026',
+    dd_desc1:'Studentteam fra <strong>AIP2100 – AI i praksis</strong> ved Høyskolen Kristiania har tilbrakt et helt semester med å intervjue norsk arbeidsliv om kunstig intelligens. <em>Third Eye</em> er ett av disse teamene. Nå presenterer vi funnene våre.',
+    dd_desc2:'Programmet inkluderer studentpresentasjoner, innlegg fra gjesteforelesere og debatt om AI i utdanning. Dette er en unik mulighet til å høre hva som faktisk skjer med AI i norske bedrifter — direkte fra de som har gravd i det.',
+    dd_students:'Studenter', dd_industries:'Bransjer', dd_interviews:'Intervjuer',
+    dd_reserve:'Reserver plass',
+    dd_widget_cta:'Besøk siden →',
+    dd_date:'Tirsdag 2. juni 2026 · 09:00–17:00',
+    dd_location:'Kirkegata 24, Oslo',
+    dd_school:'Høyskolen Kristiania',
+    /* divider / blog */
     divider_label:'✦ Dagbok ✦',
     blog_label:'Forskningsoppføringer', blog_title:'Feltdagbok',
     btn_new_entry:'+ Ny oppføring',
+    /* sort */
+    sort_label:'Sorter:',
+    sort_newest:'Nyeste',
+    sort_popular:'Mest likt',
+    /* search */
+    search_placeholder:'Søk i oppføringer…',
+    search_results:'treff',
+    /* status */
     status_loading:'Kobler til database…',
     status_synced:'Live — endringer synkroniseres til alle enheter umiddelbart',
     status_error:'Databasefeil — sjekk konfigurasjon',
+    /* admin login */
     admin_modal_title:'⚿ Admintilgang',
     admin_pw_label:'Passord', admin_btn_enter:'Logg inn',
     admin_error_wrong:'Feil passord.',
     admin_btn_label:'⚿ Admin', admin_btn_label_on:'⚿ Admin ✓',
+    /* post modal */
     post_modal_new_title:'✦ Ny dagbokoppføring', post_modal_edit_title:'✦ Rediger oppføring',
     field_title:'Tittel', field_date:'Dato', field_tag:'Kategori / Merkelapp',
     field_preview:'Forhåndsvisning', field_body:'Fullstendig oppføring',
@@ -1780,9 +1908,89 @@ const T = {
     ph_preview:'Et kort glimt…', ph_body:'Skriv dine funn her…',
     btn_inscribe:'Lagre oppføring', btn_save:'Lagre endringer', btn_cancel:'Avbryt',
     btn_edit:'Rediger', btn_del:'Slett',
+    btn_preview_post:'◈ Forhåndsvis',
+    /* post fields */
+    field_image:'Forsidebilde (valgfritt)',
+    field_image_hint:'URL eller fil — vises som forsidebilde på innlegget',
+    field_image_upload:'📁 Last opp fra enhet',
+    field_status:'Status',
+    field_orig_lang:'Originalspråk',
+    field_pub_date:'Publiseringsdato',
+    status_published:'Publisert', status_draft:'Utkast', status_scheduled:'Planlagt',
+    /* AI summary */
+    ai_sum_label:'AI-oppsummering av intervju (valgfritt)',
+    ai_sum_placeholder:'Lim inn rå transskript eller notater fra intervjuet her — Claude genererer en strukturert oppsummering…',
+    ai_sum_btn:'✦ Generer oppsummering med AI',
+    ai_sum_generating:'↻ Genererer med Claude…',
+    ai_sum_regenerate:'✦ Generer på nytt',
+    ai_sum_apply:'Bruk som innhold',
+    ai_sum_apply_preview:'Bruk første linje som forhåndsvisning',
+    ai_sum_short:'Lim inn minst 50 tegn med transskript først.',
+    /* survey */
+    survey_toggle:'Legg til leserundersøkelse',
+    survey_question_ph:'Spørsmål, f.eks: Hva overrasket deg mest?',
+    survey_opt_ph:'Alternativ',
+    survey_add_opt:'+ Legg til alternativ',
+    survey_total_label:'svar', survey_total_label_pl:'svar',
+    survey_login_note:'Logg inn for å svare',
+    /* delete */
     delete_title:'Slett oppføring?', delete_body:'Denne oppføringen fjernes permanent for alle.',
+    /* post card */
     read_entry:'Les oppføring', close_entry:'Lukk',
+    btn_share:'⬆ Del', btn_like:'♥',
+    like_tooltip:'Lik dette innlegget', like_login_tooltip:'Logg inn for å like',
     empty_state:'Ingen oppføringer ennå.',
+    empty_search:'Ingen oppføringer samsvarer med søket.',
+    /* tags */
+    tag_filter_label:'Filter:',
+    /* comments */
+    comments_label:'Kommentarer',
+    comment_placeholder:'Skriv en kommentar…',
+    comment_send:'Send',
+    comment_login_prompt:'Logg inn for å kommentere',
+    comment_login_btn:'Logg inn',
+    no_comments:'Vær den første til å kommentere.',
+    comment_loading:'Laster…',
+    comment_hidden:'Skjult av admin',
+    /* auth */
+    auth_title:'✦ Brukerkonto',
+    auth_register_tab:'Registrer',
+    auth_login_tab:'Logg inn',
+    auth_name_label:'Ditt navn',
+    auth_email_label:'E-post',
+    auth_pw_label_user:'Passord',
+    auth_name_ph:'Ola Nordmann',
+    auth_email_ph:'din@epost.no',
+    auth_pw_ph:'Minst 6 tegn',
+    auth_create_btn:'Opprett konto',
+    auth_login_btn:'Logg inn',
+    auth_fill_all:'Fyll inn alle felt.',
+    auth_pw_short:'Passord må ha minst 6 tegn.',
+    auth_email_taken:'E-posten er allerede i bruk.',
+    auth_wrong_pw:'Feil e-post eller passord.',
+    auth_fill_login:'Fyll inn e-post og passord.',
+    auth_welcome:'Velkommen, ',
+    auth_logged_in:'Innlogget ✓',
+    auth_logged_out:'Logget ut',
+    /* user nav */
+    user_nav_login:'Logg inn',
+    /* profile */
+    profile_title:'✦ Min profil',
+    profile_name_label:'Visningsnavn',
+    profile_avatar_label:'Profilbilde — velg emoji',
+    profile_avatar_url_label:'Eller bilde-URL / fil',
+    profile_avatar_file_btn:'📁 Fil',
+    profile_notif_label:'E-postvarsler om nye innlegg',
+    profile_notif_hint:'Motta e-post når admin publiserer nytt innhold',
+    profile_logout_btn:'Logg ut',
+    profile_close_btn:'Lukk',
+    profile_save_btn:'Lagre profil',
+    profile_saved:'Profil lagret ✓',
+    /* related posts */
+    related_label:'Relaterte oppføringer',
+    /* back to top */
+    back_to_top:'Tilbake til topp',
+    /* footer */
     footer_text:'THIRD EYE · AI-FORRETNINGSINTERVJUER · SKOLEPROSJEKT',
     date_locale:'nb-NO'
   }
@@ -1816,22 +2024,105 @@ function tr(k) { return T[lang][k] || T.en[k] || k; }
 function applyTranslations() {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const k = el.dataset.i18n;
-    // Settings overrides
-    if (k === 'hero_sub'  && siteSettings.heroSub)  { el.innerHTML = siteSettings.heroSub;  return; }
-    if (k === 'hero_tagline' && siteSettings.tagline){ el.innerHTML = siteSettings.tagline;  return; }
-    if (k === 'about_p1'  && siteSettings.aboutP1)  { el.innerHTML = siteSettings.aboutP1;  return; }
-    if (k === 'about_p2'  && siteSettings.aboutP2)  { el.innerHTML = siteSettings.aboutP2;  return; }
+    if (k === 'hero_sub'     && siteSettings.heroSub)  { el.innerHTML = siteSettings.heroSub;  return; }
+    if (k === 'hero_tagline' && siteSettings.tagline)  { el.innerHTML = siteSettings.tagline;  return; }
+    if (k === 'about_p1'     && siteSettings.aboutP1)  { el.innerHTML = siteSettings.aboutP1;  return; }
+    if (k === 'about_p2'     && siteSettings.aboutP2)  { el.innerHTML = siteSettings.aboutP2;  return; }
     el.innerHTML = tr(k);
   });
-  document.getElementById('new-title').placeholder   = tr('ph_title');
-  document.getElementById('new-tag').placeholder     = tr('ph_tag');
-  document.getElementById('new-preview').placeholder = tr('ph_preview');
-  document.getElementById('new-body').placeholder    = tr('ph_body');
-  document.getElementById('admin-pw-input').placeholder = '••••••••';
-  document.getElementById('btn-add-post').textContent   = tr('btn_new_entry');
-  const ab = document.getElementById('admin-lock-btn');
-  ab.textContent = isAdmin ? tr('admin_btn_label_on') : tr('admin_btn_label');
+
+  // Post modal fields
+  const s = id => document.getElementById(id);
+  const setText = (id,k) => { const el=s(id); if(el) el.textContent=tr(k); };
+  const setPH   = (id,k) => { const el=s(id); if(el) el.placeholder=tr(k); };
+  const setHTML = (id,k) => { const el=s(id); if(el) el.innerHTML=tr(k); };
+
+  setPH('new-title',   'ph_title');
+  setPH('new-tag',     'ph_tag');
+  setPH('new-preview', 'ph_preview');
+  setPH('new-body',    'ph_body');
+  setPH('new-image-url', lang==='no'?'https://eksempel.com/bilde.jpg':'https://example.com/image.jpg');
+  setPH('admin-pw-input', '••••••••');
+  setPH('search-input', 'search_placeholder');
+  setPH('ai-transcript', 'ai_sum_placeholder');
+
+  setText('btn-add-post', 'btn_new_entry');
+  setText('img-file-label-text', 'field_image_upload');
+
+  // Sort bar
+  setText('sort-btn-newest',  'sort_newest');
+  setText('sort-btn-popular', 'sort_popular');
+  const sl = document.querySelector('.sort-label'); if(sl) sl.textContent = tr('sort_label');
+
+  // Back to top
+  const btt = s('back-to-top'); if(btt) btt.title = tr('back_to_top');
+
+  // Preview button in post modal
+  const prevBtn = document.querySelector('#post-modal .btn-cancel[onclick*="previewPost"]');
+  if (prevBtn) prevBtn.textContent = tr('btn_preview_post');
+
+  // Admin button
+  const ab = s('admin-lock-btn');
+  if(ab) ab.textContent = isAdmin ? tr('admin_btn_label_on') : tr('admin_btn_label');
+
+  // User nav button
+  updateUserNav();
+
+  // Auth modal
+  const atabs = document.querySelectorAll('.auth-tab');
+  if(atabs[0]) atabs[0].textContent = tr('auth_register_tab');
+  if(atabs[1]) atabs[1].textContent = tr('auth_login_tab');
+  setPH('reg-name',    'auth_name_ph');
+  setPH('reg-email',   'auth_email_ph');
+  setPH('reg-pw',      'auth_pw_ph');
+  setPH('login-email', 'auth_email_ph');
+  setPH('login-pw',    '••••••••');
+  const asub = s('auth-submit-btn');
+  if(asub) {
+    const isReg = s('auth-pane-register')?.classList.contains('active');
+    asub.textContent = isReg ? tr('auth_create_btn') : tr('auth_login_btn');
+  }
+
+  // Profile modal
+  const pm = s('profile-modal');
+  if(pm) {
+    const ptitle = pm.querySelector('.modal-title'); if(ptitle) ptitle.textContent = tr('profile_title');
+    setText('profile-name-display', 'profile_name_label'); // label fallback only if empty
+  }
+
+  // Post modal status options
+  const statusSel = s('new-status');
+  if(statusSel) {
+    statusSel.options[0].text = tr('status_published');
+    statusSel.options[1].text = tr('status_draft');
+    statusSel.options[2].text = tr('status_scheduled');
+  }
+  // Post modal orig-lang options
+  const origSel = s('new-orig-lang');
+  if(origSel) {
+    origSel.options[0].text = lang==='no'?'Norsk':'Norwegian';
+    origSel.options[1].text = 'English';
+  }
+
+  // AI summary button
+  const aiBtn = s('ai-sum-btn');
+  if(aiBtn && !aiBtn.disabled) aiBtn.innerHTML = `<span>${tr('ai_sum_btn')}</span>`;
+
+  // Survey fields
+  const surveyToggleLabel = document.querySelector('.survey-toggle-row');
+  if(surveyToggleLabel) {
+    const textNode = [...surveyToggleLabel.childNodes].find(n=>n.nodeType===3);
+    if(textNode) textNode.textContent = ' '+tr('survey_toggle');
+  }
+  setPH('survey-question', 'survey_question_ph');
+  const survAddBtn = document.querySelector('.survey-add-opt');
+  if(survAddBtn) survAddBtn.textContent = tr('survey_add_opt');
+
+  // Demo Day section (dynamic content via JS)
+  applyDemoDayTranslations();
+
   setStatus(currentStatus);
+  renderPosts();
 }
 
 function setLang(l) {
@@ -1853,9 +2144,45 @@ function setStatus(type) {
 }
 
 // ══════════════════════════════════════════════════════
+//  DEMO DAY TRANSLATIONS
+// ══════════════════════════════════════════════════════
+function applyDemoDayTranslations() {
+  const d = siteSettings.demoDay || {};
+  const s = id => document.getElementById(id);
+  const set = (id,key,fallback) => { const el=s(id); if(el) el.innerHTML = d[key] || tr(fallback||key); };
+
+  // Section label & title
+  const ddLabel = document.querySelector('#demoday .section-label');
+  if(ddLabel) ddLabel.innerHTML = (ddLabel.innerHTML.includes('◈')?'<span style="display:none"></span>':'')+tr('dd_label');
+  set('dd-section-title', 'title', 'dd_title');
+  set('dd-eyebrow',  'eyebrow',  null);
+  set('dd-headline', 'headline', null);
+  set('dd-desc1',    'desc1',    'dd_desc1');
+  set('dd-desc2',    'desc2',    'dd_desc2');
+
+  // Stats labels
+  const statLabels = document.querySelectorAll('.demoday-stat-label');
+  if(statLabels[0]) statLabels[0].textContent = tr('dd_students');
+  if(statLabels[1]) statLabels[1].textContent = tr('dd_industries');
+  if(statLabels[2]) statLabels[2].textContent = tr('dd_interviews');
+
+  // Info rows
+  const rows = document.querySelectorAll('.demoday-info-row');
+  if(rows[0]) rows[0].innerHTML = `<span class="demoday-info-icon">📅</span> ${d.datetime||tr('dd_date')}`;
+  if(rows[1]) rows[1].innerHTML = `<span class="demoday-info-icon">📍</span> ${d.location||tr('dd_location')} — ${tr('dd_school')}`;
+  if(rows[2]) rows[2].innerHTML = `<span class="demoday-info-icon">🎓</span> ${tr('dd_school')}`;
+
+  // Reserve button text
+  const reserveBtn = document.querySelector('.demoday-btn');
+  if(reserveBtn) { reserveBtn.querySelector('span:first-child').textContent = tr('dd_reserve'); if(d.regUrl) reserveBtn.href=d.regUrl; }
+
+  // Widget CTA
+  const widgetCta = document.querySelector('.demoday-widget-cta');
+  if(widgetCta) widgetCta.textContent = tr('dd_widget_cta');
+}
+// ══════════════════════════════════════════════════════
 //  FIREBASE
 // ══════════════════════════════════════════════════════
-function initFirebase() {
   if (!window._fb) { setStatus('error'); return; }
   const { onValue, postsRef, settingsRef, logRef, usersRef, onAuthState, db, ref } = window._fb;
 
@@ -2033,10 +2360,10 @@ function renderPosts() {
 
   // Update search count
   const countEl = document.getElementById('search-count');
-  if (countEl) countEl.textContent = searchQuery ? `${sorted.length} ${sorted.length===1?'treff':'treff'}` : '';
+  if (countEl) countEl.textContent = searchQuery ? `${sorted.length} ${tr('search_results')}` : '';
 
   if (!sorted.length) {
-    c.innerHTML = `<div class="empty-state">${searchQuery ? '🔍 Ingen oppføringer samsvarer med søket.' : tr('empty_state')}</div>`;
+    c.innerHTML = `<div class="empty-state">${searchQuery ? tr('empty_search') : tr('empty_state')}</div>`;
     applyPostStagger(); return;
   }
 
@@ -2084,9 +2411,9 @@ function renderPosts() {
         ${statusBadge}
         <button class="post-like-btn${hasLikedPost?' liked':''}" id="like-${post._key}"
           onclick="likePost(event,'${post._key}')"
-          title="${uid?'Lik dette innlegget':'Logg inn for å like'}"
+          title="${uid?tr('like_tooltip'):tr('like_login_tooltip')}"
           style="margin-left:auto;">
-          ♥<span class="like-count">${postLikes ? ' '+postLikes : ''}</span>
+          ${tr('btn_like')}<span class="like-count">${postLikes ? ' '+postLikes : ''}</span>
         </button>
       </div>
       <h3 class="post-title">${hl(title)}${transNote}</h3>
@@ -2095,7 +2422,7 @@ function renderPosts() {
       ${post.survey ? renderSurveyHTML(post._key, post.survey) : ''}
       <div class="post-bottom-row">
         <div class="read-toggle">${tr('read_entry')}</div>
-        <button class="post-share-btn" id="share-${post._key}" onclick="sharePost(event,'${post._key}',\`${title.replace(/`/g,"'")}\`)">⬆ Del</button>
+        <button class="post-share-btn" id="share-${post._key}" onclick="sharePost(event,'${post._key}',\`${title.replace(/`/g,"'")}\`)">${tr('btn_share')}</button>
       </div>
       <div class="card-admin-bar${isAdmin?' visible':''}">
         <button class="card-btn"     onclick="editPost(event,'${post._key}')">${tr('btn_edit')}</button>
@@ -2874,7 +3201,7 @@ function injectRelatedPosts(card, post) {
     .slice(0, 3);
   if (!related.length) return;
   const locale = tr('date_locale');
-  const relLabel = lang==='no' ? 'Relaterte oppføringer' : 'Related entries';
+  const relLabel = tr('related_label');
   const html = `
     <div class="related-posts">
       <div class="related-label">${relLabel}</div>
@@ -3161,20 +3488,20 @@ async function registerUser() {
   const email = document.getElementById('reg-email').value.trim();
   const pw    = document.getElementById('reg-pw').value;
   const err   = document.getElementById('auth-error');
-  if (!name||!email||!pw) { err.textContent='Fyll inn alle felt.'; return; }
-  if (pw.length < 6)      { err.textContent='Passord må ha minst 6 tegn.'; return; }
+  if (!name||!email||!pw) { err.textContent=tr('auth_fill_all'); return; }
+  if (pw.length < 6)      { err.textContent=tr('auth_pw_short'); return; }
   err.textContent='';
   try {
     const cred = await window._fb.createUser(email, pw);
     const uid  = cred.user.uid;
-    const avatar = document.querySelector('.avatar-opt.selected')?.dataset.emoji || AVATARS[0];
+    const avatar = document.querySelector('#reg-avatar-grid .avatar-opt.selected')?.dataset.emoji || AVATARS[0];
     await window._fb.set(window._fb.ref(window._fb.db,'users/'+uid), {
       displayName: name, email, avatarEmoji: avatar, avatarUrl: '', emailNotifications: true, createdAt: Date.now()
     });
     closeModal('auth-modal');
-    toast('Velkommen, '+name+' ✓');
+    toast(tr('auth_welcome')+name+' ✓');
   } catch(e) {
-    err.textContent = e.code==='auth/email-already-in-use'?'E-posten er allerede i bruk.':e.message;
+    err.textContent = e.code==='auth/email-already-in-use'?tr('auth_email_taken'):e.message;
   }
 }
 
@@ -3182,19 +3509,19 @@ async function loginUser() {
   const email = document.getElementById('login-email').value.trim();
   const pw    = document.getElementById('login-pw').value;
   const err   = document.getElementById('auth-error');
-  if (!email||!pw) { err.textContent='Fyll inn e-post og passord.'; return; }
+  if (!email||!pw) { err.textContent=tr('auth_fill_login'); return; }
   err.textContent='';
   try {
     await window._fb.signIn(email, pw);
     closeModal('auth-modal');
-    toast('Innlogget ✓');
+    toast(tr('auth_logged_in'));
   } catch(e) {
-    err.textContent = e.code==='auth/wrong-password'||e.code==='auth/user-not-found'?'Feil e-post eller passord.':e.message;
+    err.textContent = e.code==='auth/wrong-password'||e.code==='auth/user-not-found'?tr('auth_wrong_pw'):e.message;
   }
 }
 
 function signOutUser() {
-  window._fb.signOut().then(()=>{ closeModal('profile-modal'); toast('Logget ut'); });
+  window._fb.signOut().then(()=>{ closeModal('profile-modal'); toast(tr('auth_logged_out')); });
 }
 
 function updateUserNav() {
@@ -3212,7 +3539,7 @@ function updateUserNav() {
   } else {
     btn.classList.remove('logged-in');
     avSm.innerHTML = '👤';
-    label.textContent = 'Logg inn';
+    label.textContent = tr('user_nav_login');
   }
 }
 
@@ -3272,7 +3599,7 @@ function saveProfile() {
   const notif    = document.getElementById('notif-toggle').checked;
   const upd = { displayName: name, avatarUrl: urlInput, avatarEmoji: selEmoji, emailNotifications: notif };
   window._fb.update(window._fb.ref(window._fb.db,'users/'+currentUser.uid), upd)
-    .then(()=>{ toast('Profil lagret ✓'); closeModal('profile-modal'); });
+    .then(()=>{ toast(tr('profile_saved')); closeModal('profile-modal'); });
 }
 
 function saveNotifPref(val) {
@@ -3351,7 +3678,7 @@ function renderSurveyHTML(postKey, survey) {
         </button>`).join('')}
     </div>
     <div class="survey-total" id="survey-total-${postKey}"></div>
-    ${!currentUser?`<div class="survey-login-note">Logg inn for å svare</div>`:''}
+    ${!currentUser?`<div class="survey-login-note">${tr('survey_login_note')}</div>`:''}
   </div>`;
 }
 
@@ -3379,7 +3706,7 @@ function updateSurveyDisplay(postKey) {
   const maxC   = Math.max(...counts, 1);
 
   const totalEl = document.getElementById(`survey-total-${postKey}`);
-  if (totalEl) totalEl.textContent = `${total} svar`;
+  if (totalEl) totalEl.textContent = `${total} ${total===1?tr('survey_total_label'):tr('survey_total_label_pl')}`;
 
   post.survey.options.forEach((_,i) => {
     const btn  = document.querySelector(`#survey-opts-${postKey} .survey-option-btn:nth-child(${i+1})`);
@@ -3410,12 +3737,12 @@ function updateAllSurveys() {
 async function generateAISummary() {
   const transcript = document.getElementById('ai-transcript')?.value.trim();
   if (!transcript || transcript.length < 50) {
-    toast('Lim inn minst 50 tegn med transskript først.', true); return;
+    toast(tr('ai_sum_short'), true); return;
   }
   const btn    = document.getElementById('ai-sum-btn');
   const result = document.getElementById('ai-sum-result');
   btn.disabled = true;
-  btn.innerHTML = '<span class="spin">↻</span> Genererer med Claude…';
+  btn.innerHTML = `<span class="spin">↻</span> ${tr('ai_sum_generating')}`;
   result.style.display = 'none';
 
   try {
@@ -3436,32 +3763,31 @@ async function generateAISummary() {
     if (!resp.ok) throw new Error(data.error?.message||'API-feil');
     const text = data.content?.[0]?.text || '';
     result.style.display = 'block';
-    result.innerHTML = `<strong>✦ AI-oppsummering</strong>${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}
+    result.innerHTML = `<strong>✦ ${lang==='no'?'AI-oppsummering':'AI Summary'}</strong>${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}
       <div class="ai-summary-actions">
-        <button class="ai-sum-apply" onclick="applyAISummary(\`${text.replace(/`/g,"'").replace(/\n/g,'\\n')}\`)">Bruk som innhold</button>
-        <button class="ai-sum-apply" onclick="applyAISummaryAsPreview(\`${text.split('\\n')[0].replace(/`/g,"'")}\`)">Bruk første linje som forhåndsvisning</button>
+        <button class="ai-sum-apply" onclick="applyAISummary(\`${text.replace(/`/g,"'").replace(/\n/g,'\\n')}\`)">${tr('ai_sum_apply')}</button>
+        <button class="ai-sum-apply" onclick="applyAISummaryAsPreview(\`${text.split('\\n')[0].replace(/`/g,"'")}\`)">${tr('ai_sum_apply_preview')}</button>
       </div>`;
   } catch(err) {
     toast('Claude-feil: '+err.message, true);
   } finally {
     btn.disabled = false;
-    btn.innerHTML = '<span>✦ Generer på nytt</span>';
+    btn.innerHTML = `<span>${tr('ai_sum_regenerate')}</span>`;
   }
 }
 
 function applyAISummary(text) {
   const body = document.getElementById('new-body');
   if (!body) return;
-  const clean = text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
-  body.value = clean;
-  toast('Oppsummering lagt inn i innholdsfeltet ✓');
+  body.value = text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+  toast(tr('ai_sum_apply')+' ✓');
 }
 
 function applyAISummaryAsPreview(text) {
   const prev = document.getElementById('new-preview');
   if (!prev) return;
   prev.value = text.replace(/[#*]/g,'').trim().slice(0,160);
-  toast('Første linje lagt inn som forhåndsvisning ✓');
+  toast(tr('ai_sum_apply_preview')+' ✓');
 }
 
 // ══════════════════════════════════════════════════════
@@ -3514,7 +3840,7 @@ function renderComments(postKey) {
   if (!list) return;
   const items = commentsCache[postKey] || [];
   if (!items.length) {
-    list.innerHTML = '<div class="no-comments">Vær den første til å kommentere.</div>';
+    list.innerHTML = `<div class="no-comments">${tr('no_comments')}</div>`;
     return;
   }
   const uid = currentUser?.uid || null;
@@ -3525,7 +3851,7 @@ function renderComments(postKey) {
     const isHidden = c.hidden || isBannedUser;
     // Non-admins see hidden comments blurred; admins see them with a banner
     if (isHidden && !isAdmin) {
-      return `<div class="comment-item" style="opacity:0.25;font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.12em;color:var(--text-muted);text-align:center;padding:0.5rem;">Skjult av admin</div>`;
+      return `<div class="comment-item" style="opacity:0.25;font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.12em;color:var(--text-muted);text-align:center;padding:0.5rem;">${tr('comment_hidden')}</div>`;
     }
     const av = c.avatarUrl||c.avatarEmoji||'👤';
     const avHtml = av.startsWith('http')||av.startsWith('data:')
@@ -3580,21 +3906,21 @@ function injectCommentSection(card, postKey) {
     ? `<div class="comment-form">
         <div class="comment-avatar">${avHtml}</div>
         <div class="comment-input-wrap">
-          <textarea class="comment-input" id="ci-${postKey}" placeholder="Skriv en kommentar…" rows="2"></textarea>
+          <textarea class="comment-input" id="ci-${postKey}" placeholder="${tr('comment_placeholder')}" rows="2"></textarea>
           <div class="comment-submit-row">
-            <button class="btn-submit" style="font-size:0.62rem;padding:0.3rem 1rem;" onclick="submitComment('${postKey}')">Send</button>
+            <button class="btn-submit" style="font-size:0.62rem;padding:0.3rem 1rem;" onclick="submitComment('${postKey}')">${tr('comment_send')}</button>
           </div>
         </div>
       </div>`
     : `<div class="comment-login-prompt">
-        <span>Logg inn for å kommentere</span>
-        <button class="comment-login-btn" onclick="openAuthModal('login')">Logg inn</button>
+        <span>${tr('comment_login_prompt')}</span>
+        <button class="comment-login-btn" onclick="openAuthModal('login')">${tr('comment_login_btn')}</button>
       </div>`;
 
   const html = `<div class="comments-section" id="comments-${postKey}">
-    <div class="comments-label">Kommentarer</div>
+    <div class="comments-label">${tr('comments_label')}</div>
     ${formOrPrompt}
-    <div class="comment-list"><div class="no-comments">Laster…</div></div>
+    <div class="comment-list"><div class="no-comments">${tr('comment_loading')}</div></div>
   </div>`;
   card.querySelector('.post-bottom-row').insertAdjacentHTML('afterend', html);
   initCommentsForPost(postKey);
