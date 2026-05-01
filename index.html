@@ -2183,6 +2183,7 @@ function applyDemoDayTranslations() {
 // ══════════════════════════════════════════════════════
 //  FIREBASE
 // ══════════════════════════════════════════════════════
+function initFirebase() {
   if (!window._fb) { setStatus('error'); return; }
   const { onValue, postsRef, settingsRef, logRef, usersRef, onAuthState, db, ref } = window._fb;
 
