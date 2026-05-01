@@ -684,7 +684,56 @@ body.light .comment-login-prompt { background:#f4f0e8; }
 .demoday-stat-num   { font-family:'Cinzel Decorative',serif; font-size:1.5rem; color:var(--gold); line-height:1; }
 .demoday-stat-label { font-family:'Cinzel',serif; font-size:0.55rem; letter-spacing:0.15em; color:var(--text-muted); text-transform:uppercase; }
 
-/* ══ SORT BAR ══ */
+/* ══ LIKE PARTICLES ══ */
+.like-particle { position:fixed; pointer-events:none; z-index:9999; font-size:1rem; animation:like-fly 0.9s ease-out forwards; }
+@keyframes like-fly {
+  0%   { opacity:1; transform:translate(0,0) scale(1) rotate(0deg); }
+  100% { opacity:0; transform:translate(var(--px),var(--py)) scale(0.3) rotate(var(--rot)); }
+}
+
+/* ══ SURVEY ══ */
+.survey-block { margin-top:1.5rem; padding:1.25rem 1.25rem 1rem; background:rgba(90,63,160,0.08); border:1px solid rgba(90,63,160,0.22); border-radius:2px; }
+.survey-question { font-family:'Cinzel',serif; font-size:0.82rem; letter-spacing:0.1em; color:var(--text); margin-bottom:1rem; line-height:1.4; }
+.survey-options { display:flex; flex-direction:column; gap:0.5rem; }
+.survey-option-btn { display:flex; align-items:center; gap:0.75rem; background:var(--ink2); border:1px solid var(--border); border-radius:2px; padding:0.55rem 0.9rem; cursor:pointer; transition:all 0.22s; text-align:left; width:100%; }
+.survey-option-btn:hover { border-color:rgba(90,63,160,0.45); background:rgba(90,63,160,0.1); }
+.survey-option-btn.voted { border-color:rgba(90,63,160,0.5); background:rgba(90,63,160,0.15); cursor:default; }
+.survey-option-btn.winner { border-color:var(--gold-dim); background:var(--gold-glow); }
+.survey-option-label { font-family:'EB Garamond',serif; font-size:0.95rem; color:var(--text); flex:1; }
+.survey-bar-wrap { flex:1; height:4px; background:var(--ink3); border-radius:2px; overflow:hidden; display:none; }
+.survey-option-btn.voted .survey-bar-wrap { display:block; }
+.survey-bar { height:100%; background:rgba(90,63,160,0.5); border-radius:2px; transition:width 0.5s ease; }
+.survey-option-btn.winner .survey-bar { background:var(--gold-dim); }
+.survey-pct { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.1em; color:var(--text-muted); width:30px; text-align:right; display:none; }
+.survey-option-btn.voted .survey-pct { display:block; }
+.survey-total { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.12em; color:var(--text-muted); margin-top:0.75rem; }
+.survey-login-note { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.08em; color:var(--text-muted); margin-top:0.5rem; }
+
+/* Survey fields in post modal */
+.survey-field-wrap { background:var(--ink3); border:1px solid var(--border); border-radius:2px; padding:1rem; }
+.survey-field-wrap .survey-question-input { width:100%; background:var(--ink2); border:1px solid var(--border); border-radius:2px; color:var(--text); font-family:'EB Garamond',serif; font-size:0.95rem; padding:0.5rem 0.8rem; outline:none; margin-bottom:0.75rem; transition:border-color 0.3s; }
+.survey-field-wrap .survey-question-input:focus { border-color:var(--gold-dim); }
+.survey-options-inputs { display:flex; flex-direction:column; gap:0.4rem; margin-bottom:0.6rem; }
+.survey-opt-row { display:flex; gap:0.4rem; align-items:center; }
+.survey-opt-row input { flex:1; background:var(--ink2); border:1px solid var(--border); border-radius:2px; color:var(--text); font-family:'EB Garamond',serif; font-size:0.9rem; padding:0.4rem 0.7rem; outline:none; transition:border-color 0.3s; }
+.survey-opt-row input:focus { border-color:var(--gold-dim); }
+.survey-opt-del { background:none; border:1px solid var(--red-border); color:var(--red-fg); width:26px; height:26px; border-radius:2px; cursor:pointer; font-size:0.75rem; flex-shrink:0; transition:all 0.2s; }
+.survey-opt-del:hover { background:var(--red-bg); }
+.survey-add-opt { background:none; border:1px solid var(--border); color:var(--text-muted); font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.12em; padding:0.3rem 0.8rem; cursor:pointer; border-radius:2px; transition:all 0.22s; }
+.survey-add-opt:hover { border-color:var(--gold-dim); color:var(--gold); }
+.survey-toggle-row { display:flex; align-items:center; gap:0.5rem; font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.1em; color:var(--text-muted); margin-bottom:0.5rem; cursor:pointer; user-select:none; }
+
+/* ══ AI SUMMARY ══ */
+.ai-summary-wrap { margin:0.75rem 0 0; }
+.ai-summary-btn { display:flex; align-items:center; gap:0.5rem; background:rgba(90,63,160,0.1); border:1px solid rgba(90,63,160,0.3); color:#b09bde; font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; padding:0.5rem 1.1rem; cursor:pointer; border-radius:2px; transition:all 0.25s; width:100%; justify-content:center; }
+.ai-summary-btn:hover { background:rgba(90,63,160,0.18); border-color:rgba(90,63,160,0.5); }
+.ai-summary-btn:disabled { opacity:0.5; cursor:not-allowed; }
+.ai-summary-btn .spin { display:inline-block; animation:logo-spin-cw 0.7s linear infinite; }
+.ai-summary-result { margin-top:1rem; background:rgba(90,63,160,0.06); border:1px solid rgba(90,63,160,0.2); border-radius:2px; padding:1rem 1.1rem; font-size:0.9rem; color:var(--text); line-height:1.7; }
+.ai-summary-result strong { font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.15em; color:#b09bde; display:block; margin-bottom:0.4rem; }
+.ai-summary-actions { display:flex; gap:0.5rem; margin-top:0.75rem; }
+.ai-sum-apply { background:var(--gold-glow); border:1px solid var(--gold-dim); color:var(--gold); font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.12em; padding:0.3rem 0.9rem; cursor:pointer; border-radius:2px; transition:all 0.22s; }
+.ai-sum-apply:hover { background:rgba(201,168,76,0.22); }
 .sort-bar { display:flex; align-items:center; gap:0.5rem; margin-bottom:1.25rem; flex-wrap:wrap; }
 .sort-label { font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); white-space:nowrap; }
 .sort-btn { background:none; border:1px solid var(--border); color:var(--text-muted); font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.28rem 0.85rem; cursor:pointer; border-radius:2px; transition:all 0.22s; }
@@ -1616,6 +1665,36 @@ body.light #back-to-top { background:#fff; box-shadow:0 2px 12px rgba(0,0,0,0.08
       <label>Publiseringsdato</label>
       <input type="date" id="new-publish-at">
     </div>
+
+    <!-- AI INTERVIEW SUMMARY -->
+    <div class="field">
+      <label>AI-oppsummering av intervju (valgfritt)</label>
+      <textarea id="ai-transcript" placeholder="Lim inn rå transskript eller notater fra intervjuet her — Claude genererer en strukturert oppsummering…" style="min-height:90px;"></textarea>
+      <div class="ai-summary-wrap">
+        <button type="button" class="ai-summary-btn" id="ai-sum-btn" onclick="generateAISummary()">
+          <span>✦ Generer oppsummering med AI</span>
+        </button>
+        <div class="ai-summary-result" id="ai-sum-result" style="display:none;"></div>
+      </div>
+    </div>
+
+    <!-- SURVEY -->
+    <div class="field">
+      <label>
+        <span class="survey-toggle-row" onclick="toggleSurveyField()">
+          <input type="checkbox" id="survey-enabled" style="accent-color:var(--gold);cursor:pointer;"> Legg til leserundersøkelse
+        </span>
+      </label>
+      <div class="survey-field-wrap" id="survey-field-wrap" style="display:none;">
+        <input class="survey-question-input" id="survey-question" placeholder="Spørsmål, f.eks: Hva overrasket deg mest?">
+        <div class="survey-options-inputs" id="survey-options-inputs">
+          <div class="survey-opt-row"><input placeholder="Alternativ 1" value=""> <button type="button" class="survey-opt-del" onclick="removeSurveyOpt(this)">✕</button></div>
+          <div class="survey-opt-row"><input placeholder="Alternativ 2" value=""> <button type="button" class="survey-opt-del" onclick="removeSurveyOpt(this)">✕</button></div>
+        </div>
+        <button type="button" class="survey-add-opt" onclick="addSurveyOpt()">+ Legg til alternativ</button>
+      </div>
+    </div>
+
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal('post-modal')" data-i18n="btn_cancel"></button>
       <button class="btn-cancel" onclick="previewPost()" style="border-color:rgba(201,168,76,0.3);color:var(--gold-dim);">◈ Forhåndsvis</button>
@@ -2010,6 +2089,7 @@ function renderPosts() {
       <h3 class="post-title">${hl(title)}${transNote}</h3>
       <p class="post-preview">${hl(preview)}</p>
       <div class="post-body">${body}</div>
+      ${post.survey ? renderSurveyHTML(post._key, post.survey) : ''}
       <div class="post-bottom-row">
         <div class="read-toggle">${tr('read_entry')}</div>
         <div style="display:flex;align-items:center;gap:0.35rem;">
@@ -2037,6 +2117,7 @@ function renderPosts() {
     }
   });
   applyPostStagger();
+  setTimeout(updateAllSurveys, 100);
 }
 
 function togglePost(card) {
@@ -2083,12 +2164,35 @@ function openPostModal(editKey) {
     document.getElementById('new-body').value      = p.body.replace(/<br\s*\/?>/gi,'\n').replace(/<[^>]+>/g,'');
     document.getElementById('new-image-url').value = p.imageUrl||'';
     resetImageFields(p.imageUrl||null);
+    // Restore survey
+    const se = document.getElementById('survey-enabled');
+    const sw = document.getElementById('survey-field-wrap');
+    if (p.survey && se && sw) {
+      se.checked = true; sw.style.display='block';
+      document.getElementById('survey-question').value = p.survey.question||'';
+      const oi = document.getElementById('survey-options-inputs');
+      if (oi) {
+        oi.innerHTML = (p.survey.options||[]).map(o=>`<div class="survey-opt-row"><input placeholder="Alternativ" value="${o}"> <button type="button" class="survey-opt-del" onclick="removeSurveyOpt(this)">✕</button></div>`).join('');
+      }
+    } else if (se) { se.checked=false; if(sw) sw.style.display='none'; }
     document.getElementById('new-status').value    = postStatus(p);
     document.getElementById('new-publish-at').value= p.publishAt||'';
     document.getElementById('new-orig-lang').value = p.originalLang||'no';
   } else {
     ['new-title','new-tag','new-preview','new-body','new-image-url'].forEach(id=>document.getElementById(id).value='');
     resetImageFields(null);
+    // Reset survey
+    const se2 = document.getElementById('survey-enabled');
+    const sw2 = document.getElementById('survey-field-wrap');
+    if (se2) se2.checked = false;
+    if (sw2) sw2.style.display = 'none';
+    const sq = document.getElementById('survey-question'); if(sq) sq.value='';
+    const oi2 = document.getElementById('survey-options-inputs');
+    if (oi2) oi2.innerHTML = `<div class="survey-opt-row"><input placeholder="Alternativ 1" value=""> <button type="button" class="survey-opt-del" onclick="removeSurveyOpt(this)">✕</button></div><div class="survey-opt-row"><input placeholder="Alternativ 2" value=""> <button type="button" class="survey-opt-del" onclick="removeSurveyOpt(this)">✕</button></div>`;
+    // Reset AI summary
+    const at = document.getElementById('ai-transcript'); if(at) at.value='';
+    const ar = document.getElementById('ai-sum-result'); if(ar) { ar.style.display='none'; ar.innerHTML=''; }
+    const ab = document.getElementById('ai-sum-btn'); if(ab) ab.disabled=false;
     document.getElementById('new-date').value        = new Date().toISOString().split('T')[0];
     document.getElementById('new-status').value      = 'published';
     document.getElementById('new-publish-at').value  = '';
@@ -2112,6 +2216,17 @@ function submitPost() {
   const publishAt = status==='scheduled' ? document.getElementById('new-publish-at').value : null;
   const isDraft   = status !== 'published';
   const editKey   = document.getElementById('edit-key').value;
+
+  // Collect survey data
+  const surveyEnabled = document.getElementById('survey-enabled')?.checked;
+  const surveyQ = document.getElementById('survey-question')?.value.trim();
+  const surveyOpts = surveyEnabled && surveyQ
+    ? [...document.querySelectorAll('#survey-options-inputs .survey-opt-row input')]
+        .map(i=>i.value.trim()).filter(Boolean)
+    : null;
+  const survey = surveyEnabled && surveyQ && surveyOpts?.length >= 2
+    ? { question: surveyQ, options: surveyOpts }
+    : null;
   const { set, push, postsRef, ref, db } = window._fb;
   document.getElementById('post-submit-btn').disabled = true;
 
@@ -2123,7 +2238,7 @@ function submitPost() {
     [`preview_${origLang}`]: preview||title,
     [`body_${origLang}`]: body,
     originalLang: origLang,
-    draft: isDraft, publishAt,
+    draft: isDraft, publishAt, survey: survey || null,
     order: editKey ? (posts.find(p=>p._key===editKey)||{}).order||0 : maxOrder+1
   };
 
@@ -3173,6 +3288,183 @@ function buildRegAvatarGrid() {
 }
 
 // ══════════════════════════════════════════════════════
+//  LIKE PARTICLES
+// ══════════════════════════════════════════════════════
+function spawnLikeParticles(btn) {
+  const rect = btn.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top  + rect.height / 2;
+  const emojis = ['♥','✦','★','✿','◈'];
+  for (let i = 0; i < 8; i++) {
+    const el = document.createElement('div');
+    el.className = 'like-particle';
+    el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    const angle  = (Math.random() * 360) * (Math.PI/180);
+    const dist   = 45 + Math.random() * 55;
+    const px     = Math.cos(angle) * dist;
+    const py     = Math.sin(angle) * dist - 30;
+    const rot    = (Math.random()-0.5)*180 + 'deg';
+    const delay  = Math.random() * 0.18;
+    el.style.cssText = `left:${cx}px;top:${cy}px;--px:${px}px;--py:${py}px;--rot:${rot};color:var(--gold);animation-delay:${delay}s;`;
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(), 1100);
+  }
+}
+
+// ══════════════════════════════════════════════════════
+//  SURVEY
+// ══════════════════════════════════════════════════════
+function toggleSurveyField() {
+  const cb  = document.getElementById('survey-enabled');
+  const wrap = document.getElementById('survey-field-wrap');
+  if (!cb||!wrap) return;
+  wrap.style.display = cb.checked ? 'block' : 'none';
+}
+
+function addSurveyOpt() {
+  const container = document.getElementById('survey-options-inputs');
+  if (!container) return;
+  const n = container.children.length + 1;
+  const row = document.createElement('div');
+  row.className = 'survey-opt-row';
+  row.innerHTML = `<input placeholder="Alternativ ${n}" value=""> <button type="button" class="survey-opt-del" onclick="removeSurveyOpt(this)">✕</button>`;
+  container.appendChild(row);
+}
+
+function removeSurveyOpt(btn) {
+  const row = btn.closest('.survey-opt-row');
+  const container = document.getElementById('survey-options-inputs');
+  if (container && container.children.length > 2) row.remove();
+  else row.querySelector('input').value = '';
+}
+
+function renderSurveyHTML(postKey, survey) {
+  if (!survey || !survey.question || !survey.options?.length) return '';
+  return `<div class="survey-block" id="survey-${postKey}" data-postkey="${postKey}">
+    <div class="survey-question">${survey.question}</div>
+    <div class="survey-options" id="survey-opts-${postKey}">
+      ${survey.options.map((opt,i) => `
+        <button class="survey-option-btn" onclick="voteSurvey('${postKey}',${i})">
+          <span class="survey-option-label">${opt}</span>
+          <div class="survey-bar-wrap"><div class="survey-bar" id="sbar-${postKey}-${i}" style="width:0%"></div></div>
+          <span class="survey-pct" id="spct-${postKey}-${i}">0%</span>
+        </button>`).join('')}
+    </div>
+    <div class="survey-total" id="survey-total-${postKey}"></div>
+    ${!currentUser?`<div class="survey-login-note">Logg inn for å svare</div>`:''}
+  </div>`;
+}
+
+function voteSurvey(postKey, optIndex) {
+  if (!currentUser) { openAuthModal('login'); return; }
+  const uid = currentUser.uid;
+  const post = posts.find(p=>p._key===postKey);
+  if (!post||!post.survey) return;
+  // Check if already voted
+  const existingVote = post.survey.votes?.[uid];
+  if (existingVote !== undefined) return; // already voted
+  const { ref, db, update } = window._fb;
+  update(ref(db,'/'), {[`posts/${postKey}/survey/votes/${uid}`]: optIndex})
+    .then(()=>updateSurveyDisplay(postKey));
+}
+
+function updateSurveyDisplay(postKey) {
+  const post = posts.find(p=>p._key===postKey);
+  if (!post?.survey?.options) return;
+  const votes  = post.survey.votes || {};
+  const uid    = currentUser?.uid;
+  const hasVoted = uid && votes[uid] !== undefined;
+  const total  = Object.values(votes).length;
+  const counts = post.survey.options.map((_,i)=>Object.values(votes).filter(v=>v===i).length);
+  const maxC   = Math.max(...counts, 1);
+
+  const totalEl = document.getElementById(`survey-total-${postKey}`);
+  if (totalEl) totalEl.textContent = `${total} svar`;
+
+  post.survey.options.forEach((_,i) => {
+    const btn  = document.querySelector(`#survey-opts-${postKey} .survey-option-btn:nth-child(${i+1})`);
+    const bar  = document.getElementById(`sbar-${postKey}-${i}`);
+    const pct  = document.getElementById(`spct-${postKey}-${i}`);
+    if (!btn) return;
+    const pctVal = total ? Math.round(counts[i]/total*100) : 0;
+    if (hasVoted) {
+      btn.classList.add('voted');
+      if (counts[i]===maxC && total>0) btn.classList.add('winner');
+      btn.disabled = true;
+    }
+    if (bar) bar.style.width = pctVal+'%';
+    if (pct) pct.textContent = pctVal+'%';
+    // Highlight user's vote
+    if (hasVoted && votes[uid]===i) btn.style.outline='1px solid var(--gold-dim)';
+  });
+}
+
+// Run survey display update when posts re-render
+function updateAllSurveys() {
+  posts.forEach(p => { if (p.survey && document.getElementById('survey-'+p._key)) updateSurveyDisplay(p._key); });
+}
+
+// ══════════════════════════════════════════════════════
+//  AI INTERVIEW SUMMARY
+// ══════════════════════════════════════════════════════
+async function generateAISummary() {
+  const transcript = document.getElementById('ai-transcript')?.value.trim();
+  if (!transcript || transcript.length < 50) {
+    toast('Lim inn minst 50 tegn med transskript først.', true); return;
+  }
+  const btn    = document.getElementById('ai-sum-btn');
+  const result = document.getElementById('ai-sum-result');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin">↻</span> Genererer med Claude…';
+  result.style.display = 'none';
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', 'anthropic-version':'2023-06-01', 'anthropic-dangerous-direct-browser-access':'true' },
+      body: JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        system:`Du er en akademisk assistent som hjelper studenter med å strukturere funn fra AI-intervjuer til et skoleprosjekt kalt "Third Eye". Svar alltid på norsk. Vær kortfattet, presis og akademisk.`,
+        messages:[{
+          role:'user',
+          content:`Analyser dette intervjutransskriptet og lag en strukturert oppsummering med følgende seksjoner:\n\n**Nøkkelfunn** (3-4 punkter)\n**Sitat å fremheve** (1-2 direkte sitater)\n**AI-bruk i bedriften** (kort beskrivelse)\n**Utfordringer nevnt** (hvis noen)\n\nTransskript:\n${transcript}`
+        }]
+      })
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error?.message||'API-feil');
+    const text = data.content?.[0]?.text || '';
+    result.style.display = 'block';
+    result.innerHTML = `<strong>✦ AI-oppsummering</strong>${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}
+      <div class="ai-summary-actions">
+        <button class="ai-sum-apply" onclick="applyAISummary(\`${text.replace(/`/g,"'").replace(/\n/g,'\\n')}\`)">Bruk som innhold</button>
+        <button class="ai-sum-apply" onclick="applyAISummaryAsPreview(\`${text.split('\\n')[0].replace(/`/g,"'")}\`)">Bruk første linje som forhåndsvisning</button>
+      </div>`;
+  } catch(err) {
+    toast('Claude-feil: '+err.message, true);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span>✦ Generer på nytt</span>';
+  }
+}
+
+function applyAISummary(text) {
+  const body = document.getElementById('new-body');
+  if (!body) return;
+  const clean = text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+  body.value = clean;
+  toast('Oppsummering lagt inn i innholdsfeltet ✓');
+}
+
+function applyAISummaryAsPreview(text) {
+  const prev = document.getElementById('new-preview');
+  if (!prev) return;
+  prev.value = text.replace(/[#*]/g,'').trim().slice(0,160);
+  toast('Første linje lagt inn som forhåndsvisning ✓');
+}
+
+// ══════════════════════════════════════════════════════
 //  SORT
 // ══════════════════════════════════════════════════════
 function setSort(mode) {
@@ -3193,10 +3485,12 @@ function likePost(e, postKey) {
   if (!post) return;
   const { ref, db, update, remove } = window._fb;
   const path = `posts/${postKey}/likes/${uid}`;
+  const btn = document.getElementById('like-'+postKey);
   if (post.likes && post.likes[uid]) {
     remove(ref(db, path));
   } else {
     update(ref(db, '/'), {[path]: true});
+    if (btn) spawnLikeParticles(btn);
   }
 }
 
