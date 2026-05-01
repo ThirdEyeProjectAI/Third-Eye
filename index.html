@@ -684,6 +684,19 @@ body.light .comment-login-prompt { background:#f4f0e8; }
 .demoday-stat-num   { font-family:'Cinzel Decorative',serif; font-size:1.5rem; color:var(--gold); line-height:1; }
 .demoday-stat-label { font-family:'Cinzel',serif; font-size:0.55rem; letter-spacing:0.15em; color:var(--text-muted); text-transform:uppercase; }
 
+/* ══ SORT BAR ══ */
+.sort-bar { display:flex; align-items:center; gap:0.5rem; margin-bottom:1.25rem; flex-wrap:wrap; }
+.sort-label { font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); white-space:nowrap; }
+.sort-btn { background:none; border:1px solid var(--border); color:var(--text-muted); font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.28rem 0.85rem; cursor:pointer; border-radius:2px; transition:all 0.22s; }
+.sort-btn:hover { border-color:var(--gold-dim); color:var(--gold); }
+.sort-btn.active { background:var(--gold-glow); border-color:var(--gold-dim); color:var(--gold); }
+
+/* ══ POST LIKE BUTTON ══ */
+.post-like-btn { display:flex; align-items:center; gap:0.35rem; background:none; border:1px solid transparent; color:var(--text-muted); font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.1em; padding:0.22rem 0.65rem; border-radius:2px; cursor:pointer; transition:all 0.22s; user-select:none; flex-shrink:0; }
+.post-like-btn:hover { border-color:var(--gold-dim); color:var(--gold); background:var(--gold-glow); }
+.post-like-btn.liked { background:var(--gold-glow); border-color:var(--gold-dim); color:var(--gold); }
+.post-like-btn .like-count { font-size:0.65rem; min-width:10px; }
+
 /* ══════════════════════════════════════════════════════
    ENHANCED INTERACTIONS & ANIMATIONS
 ══════════════════════════════════════════════════════ */
@@ -1229,6 +1242,11 @@ body.light #back-to-top { background:#fff; box-shadow:0 2px 12px rgba(0,0,0,0.08
       <div class="status-dot"></div>
       <span id="status-text"></span>
     </div>
+    <div class="sort-bar">
+      <span class="sort-label">Sorter:</span>
+      <button class="sort-btn active" id="sort-btn-newest" onclick="setSort('newest')">Nyeste</button>
+      <button class="sort-btn" id="sort-btn-popular" onclick="setSort('popular')">Mest likt</button>
+    </div>
     <div class="search-wrap">
       <input class="search-input" id="search-input" placeholder="Søk i oppføringer…" oninput="filterPosts(this.value)">
       <button class="search-clear" id="search-clear" onclick="clearSearch()" title="Tøm søk">✕</button>
@@ -1706,6 +1724,7 @@ let currentUser  = null;
 let userProfile  = {};
 let allUsers     = {};
 let commentsCache = {};
+let sortMode     = 'newest'; // 'newest' | 'popular'
 
 const AVATARS = ['🌙','⭐','🔮','🌿','🦅','🌊','🔥','⚡','🌸','🦉','🌺','💫','🐺','🍃','🌙'];
 
@@ -1909,7 +1928,16 @@ function renderPosts() {
   c.innerHTML = '';
   const locale = tr('date_locale');
   const visible = posts.filter(p => isAdmin || isVisible(p));
-  let sorted = [...visible].sort((a,b) => (a.order??0)-(b.order??0) || new Date(b.date)-new Date(a.date));
+  let sorted;
+  if (sortMode === 'popular') {
+    sorted = [...visible].sort((a,b) => {
+      const aLikes = a.likes ? Object.keys(a.likes).length : 0;
+      const bLikes = b.likes ? Object.keys(b.likes).length : 0;
+      return bLikes - aLikes || new Date(b.date) - new Date(a.date);
+    });
+  } else {
+    sorted = [...visible].sort((a,b) => (a.order??0)-(b.order??0) || new Date(b.date)-new Date(a.date));
+  }
 
   // Search filtering
   if (searchQuery) {
@@ -1959,6 +1987,10 @@ function renderPosts() {
       return text.replace(re, '<mark class="search-hl">$1</mark>');
     };
 
+    const uid = currentUser?.uid || null;
+    const postLikes    = post.likes ? Object.keys(post.likes).length : 0;
+    const hasLikedPost = uid && post.likes && post.likes[uid];
+
     let statusBadge = '';
     if (isAdmin && st === 'draft')     statusBadge = `<span class="post-status-badge draft">Utkast</span>`;
     if (isAdmin && st === 'scheduled') statusBadge = `<span class="post-status-badge scheduled">Planlagt ${post.publishAt}</span>`;
@@ -1980,7 +2012,14 @@ function renderPosts() {
       <div class="post-body">${body}</div>
       <div class="post-bottom-row">
         <div class="read-toggle">${tr('read_entry')}</div>
-        <button class="post-share-btn" id="share-${post._key}" onclick="sharePost(event,'${post._key}',\`${title.replace(/`/g,"'")}\`)">⬆ Del</button>
+        <div style="display:flex;align-items:center;gap:0.35rem;">
+          <button class="post-like-btn${hasLikedPost?' liked':''}" id="like-${post._key}"
+            onclick="likePost(event,'${post._key}')"
+            title="${uid?'Lik dette innlegget':'Logg inn for å like'}">
+            ♥ <span class="like-count">${postLikes||''}</span>
+          </button>
+          <button class="post-share-btn" id="share-${post._key}" onclick="sharePost(event,'${post._key}',\`${title.replace(/`/g,"'")}\`)">⬆ Del</button>
+        </div>
       </div>
     `;
     card.addEventListener('click', () => togglePost(card));
@@ -3131,6 +3170,34 @@ function buildRegAvatarGrid() {
   const grid = document.getElementById('reg-avatar-grid');
   if (!grid) return;
   grid.innerHTML = AVATARS.map((e,i)=>`<div class="avatar-opt${i===0?' selected':''}" data-emoji="${e}" onclick="document.querySelectorAll('#reg-avatar-grid .avatar-opt').forEach(o=>o.classList.remove('selected'));this.classList.add('selected')">${e}</div>`).join('');
+}
+
+// ══════════════════════════════════════════════════════
+//  SORT
+// ══════════════════════════════════════════════════════
+function setSort(mode) {
+  sortMode = mode;
+  document.getElementById('sort-btn-newest')?.classList.toggle('active', mode==='newest');
+  document.getElementById('sort-btn-popular')?.classList.toggle('active', mode==='popular');
+  renderPosts();
+}
+
+// ══════════════════════════════════════════════════════
+//  POST LIKES
+// ══════════════════════════════════════════════════════
+function likePost(e, postKey) {
+  e.stopPropagation();
+  if (!currentUser) { openAuthModal('login'); return; }
+  const uid = currentUser.uid;
+  const post = posts.find(p => p._key === postKey);
+  if (!post) return;
+  const { ref, db, update, remove } = window._fb;
+  const path = `posts/${postKey}/likes/${uid}`;
+  if (post.likes && post.likes[uid]) {
+    remove(ref(db, path));
+  } else {
+    update(ref(db, '/'), {[path]: true});
+  }
 }
 
 // ══════════════════════════════════════════════════════
