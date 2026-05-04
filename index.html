@@ -1415,7 +1415,6 @@ body.light #back-to-top { background:#fff; box-shadow:0 2px 12px rgba(0,0,0,0.08
       <span id="nav-user-label">Logg inn</span>
     </button>
     <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Bytt tema">☀</button>
-    <button class="user-nav-btn" id="user-nav-btn" onclick="handleUserBtn()">Logg inn</button>
     <button class="btn-panel" id="btn-panel" onclick="openAdminPanel()">☰ Panel</button>
     <button class="hamburger-btn" id="hamburger-btn" onclick="toggleMobileMenu()">☰</button>
   </div>
@@ -3970,6 +3969,8 @@ function handleUserBtn() {
 }
 
 function openAuthModal(tab='register') {
+  // If already logged in, show profile instead of auth tabs
+  if (currentUser) { openProfileModal(); return; }
   const isReg = tab==='register';
   document.querySelectorAll('.auth-tab').forEach((t,i)=>t.classList.toggle('active',i===(isReg?0:1)));
   document.querySelectorAll('.auth-pane').forEach((p,i)=>p.classList.toggle('active',i===(isReg?0:1)));
