@@ -326,8 +326,11 @@ body.light .mobile-menu a { color:#4a3d2c; }
 
 /* ══ COMMENTS ══ */
 .comments-section { margin-top:2rem; padding-top:1.5rem; border-top:1px solid var(--border); }
-.comments-label { font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:1.25rem; display:flex; align-items:center; gap:0.75rem; }
+.comments-label { font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:0; display:flex; align-items:center; gap:0.75rem; justify-content:space-between; padding-bottom:0.75rem; cursor:pointer; user-select:none; }
 .comments-label::after { content:''; flex:1; height:1px; background:linear-gradient(to right,var(--gold-dim),transparent); }
+.comments-toggle-icon { font-size:0.7rem; color:var(--gold-dim); flex-shrink:0; transition:color 0.2s; margin-left:0.25rem; }
+.comments-label:hover .comments-toggle-icon { color:var(--gold); }
+.comments-body { margin-top:0.85rem; }
 .comment-list { display:flex; flex-direction:column; gap:0.85rem; margin-bottom:1.25rem; }
 .comment-item { display:flex; gap:0.85rem; align-items:flex-start; animation:fade-in 0.3s ease; }
 .comment-avatar { width:32px; height:32px; border-radius:50%; flex-shrink:0; border:1px solid rgba(201,168,76,0.2); display:flex; align-items:center; justify-content:center; font-family:'Cinzel',serif; font-size:0.7rem; color:var(--gold); background:linear-gradient(135deg,rgba(90,63,160,0.2),rgba(201,168,76,0.1)); overflow:hidden; }
@@ -631,8 +634,11 @@ button, .btn-add, .btn-submit, .btn-cancel,
 
 /* ══ COMMENTS ══ */
 .comments-section { margin-top:1.75rem; padding-top:1.5rem; border-top:1px solid var(--border); }
-.comments-label { font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:1.25rem; display:flex; align-items:center; gap:0.75rem; }
+.comments-label { font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:0; display:flex; align-items:center; gap:0.75rem; justify-content:space-between; padding-bottom:0.75rem; cursor:pointer; user-select:none; }
 .comments-label::after { content:''; flex:1; height:1px; background:linear-gradient(to right,var(--gold-dim),transparent); }
+.comments-toggle-icon { font-size:0.7rem; color:var(--gold-dim); flex-shrink:0; transition:color 0.2s; margin-left:0.25rem; }
+.comments-label:hover .comments-toggle-icon { color:var(--gold); }
+.comments-body { margin-top:0.85rem; }
 .comment-form { display:flex; gap:0.7rem; align-items:flex-start; margin-bottom:1.25rem; }
 .comment-avatar { width:32px; height:32px; border-radius:50%; background:rgba(90,63,160,0.2); display:flex; align-items:center; justify-content:center; font-size:1rem; flex-shrink:0; overflow:hidden; user-select:none; }
 .comment-avatar img { width:100%; height:100%; object-fit:cover; }
@@ -4323,9 +4329,14 @@ function injectCommentSection(card, postKey) {
       </div>`;
 
   const html = `<div class="comments-section" id="comments-${postKey}">
-    <div class="comments-label">${tr('comments_label')}</div>
-    ${formOrPrompt}
-    <div class="comment-list"><div class="no-comments">${tr('comment_loading')}</div></div>
+    <div class="comments-label" onclick="toggleComments('${postKey}')" style="cursor:pointer;user-select:none;">
+      ${tr('comments_label')}
+      <span class="comments-toggle-icon" id="ctoggle-${postKey}">▾</span>
+    </div>
+    <div class="comments-body" id="cbody-${postKey}">
+      ${formOrPrompt}
+      <div class="comment-list"><div class="no-comments">${tr('comment_loading')}</div></div>
+    </div>
   </div>`;
   card.querySelector('.post-bottom-row').insertAdjacentHTML('afterend', html);
   initCommentsForPost(postKey);
@@ -4351,6 +4362,15 @@ async function submitComment(postKey) {
 function deleteComment(postKey, commentKey) {
   if (!window._fb) return;
   window._fb.remove(window._fb.ref(window._fb.db,'comments/'+postKey+'/'+commentKey));
+}
+
+function toggleComments(postKey) {
+  const body = document.getElementById('cbody-'+postKey);
+  const icon = document.getElementById('ctoggle-'+postKey);
+  if (!body) return;
+  const open = body.style.display !== 'none';
+  body.style.display  = open ? 'none' : 'block';
+  if (icon) icon.textContent = open ? '▸' : '▾';
 }
 
 // ══════════════════════════════════════════════════════
