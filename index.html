@@ -734,7 +734,37 @@ body.light .comment-login-prompt { background:#f4f0e8; }
 .ai-summary-actions { display:flex; gap:0.5rem; margin-top:0.75rem; }
 .ai-sum-apply { background:var(--gold-glow); border:1px solid var(--gold-dim); color:var(--gold); font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.12em; padding:0.3rem 0.9rem; cursor:pointer; border-radius:2px; transition:all 0.22s; }
 .ai-sum-apply:hover { background:rgba(201,168,76,0.22); }
-.sort-bar { display:flex; align-items:center; gap:0.5rem; margin-bottom:1.25rem; flex-wrap:wrap; }
+/* ══ 3D CARD TILT ══ */
+#posts-container { perspective: 1200px; }
+.post-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: border-color 0.35s, background 0.35s, transform 0.12s ease-out, box-shadow 0.12s ease-out !important;
+}
+.post-card { --sx:0px; --sy:8px; }
+.post-card:hover {
+  box-shadow:
+    var(--sx) var(--sy) 40px rgba(0,0,0,0.28),
+    0 2px 8px rgba(0,0,0,0.18),
+    0 0 0 1px rgba(201,168,76,0.08) !important;
+}
+body.light .post-card:hover {
+  box-shadow:
+    var(--sx) var(--sy) 36px rgba(80,50,10,0.18),
+    0 2px 8px rgba(80,50,10,0.1),
+    0 0 0 1px rgba(138,94,16,0.1) !important;
+}
+.post-card::before {
+  content:''; position:absolute; inset:0; border-radius:2px;
+  background:linear-gradient(135deg,rgba(255,255,255,0.04) 0%,transparent 55%);
+  pointer-events:none; opacity:0; transition:opacity 0.3s;
+}
+.post-card:hover::before { opacity:1; }
+
+/* ══ EYE GAZE CSS ══ */
+.eye-iris-group { transform-box:fill-box; transform-origin:center; }
+
+/* ══ SORT BAR ══ */
 .sort-label { font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); white-space:nowrap; }
 .sort-btn { background:none; border:1px solid var(--border); color:var(--text-muted); font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.28rem 0.85rem; cursor:pointer; border-radius:2px; transition:all 0.22s; }
 .sort-btn:hover { border-color:var(--gold-dim); color:var(--gold); }
@@ -1253,10 +1283,10 @@ body.light #back-to-top { background:#fff; box-shadow:0 2px 12px rgba(0,0,0,0.08
   <svg class="splash-eye" viewBox="0 0 120 120" fill="none">
     <path d="M10 60 Q60 10 110 60 Q60 110 10 60 Z" fill="rgba(201,168,76,0.07)" stroke="#c9a84c" stroke-width="1.5"/>
     <circle cx="60" cy="60" r="20" fill="rgba(90,63,160,0.25)" stroke="#c9a84c" stroke-width="1.5"/>
+    <path d="M60 47 L71.3 66.5 L48.7 66.5 Z" fill="none" stroke="rgba(201,168,76,0.55)" stroke-width="0.9"/>
     <circle cx="60" cy="60" r="9" fill="rgba(201,168,76,0.3)"/>
     <circle cx="60" cy="60" r="4" fill="#c9a84c"/>
     <circle cx="55" cy="55" r="2.5" fill="rgba(255,255,255,0.6)"/>
-    <path d="M60 38 L75 65 L45 65 Z" fill="none" stroke="rgba(201,168,76,0.5)" stroke-width="0.8"/>
     <line x1="60" y1="6" x2="60" y2="18" stroke="#c9a84c" stroke-width="1.2" opacity="0.5"/>
     <line x1="60" y1="102" x2="60" y2="114" stroke="#c9a84c" stroke-width="1.2" opacity="0.5"/>
   </svg>
@@ -1339,10 +1369,14 @@ body.light #back-to-top { background:#fff; box-shadow:0 2px 12px rgba(0,0,0,0.08
     <circle cx="60" cy="60" r="55" stroke="rgba(201,168,76,0.12)" stroke-width="1"/>
     <circle cx="60" cy="60" r="48" stroke="rgba(201,168,76,0.2)" stroke-width="0.8"/>
     <path d="M10 60 Q60 10 110 60 Q60 110 10 60 Z" fill="rgba(201,168,76,0.07)" stroke="#c9a84c" stroke-width="1.5"/>
-    <circle cx="60" cy="60" r="20" fill="rgba(90,63,160,0.25)" stroke="#c9a84c" stroke-width="1.5"/>
-    <circle cx="60" cy="60" r="9" fill="rgba(201,168,76,0.3)"/>
-    <circle cx="60" cy="60" r="4" fill="#c9a84c"/>
-    <circle cx="55" cy="55" r="2.5" fill="rgba(255,255,255,0.6)"/>
+    <g id="eye-iris-group" class="eye-iris-group">
+      <circle cx="60" cy="60" r="20" fill="rgba(90,63,160,0.25)" stroke="#c9a84c" stroke-width="1.5"/>
+      <!-- Equilateral triangle centred exactly on (60,60), circumradius 13 -->
+      <path d="M60 47 L71.3 66.5 L48.7 66.5 Z" fill="none" stroke="rgba(201,168,76,0.55)" stroke-width="0.9"/>
+      <circle cx="60" cy="60" r="9" fill="rgba(201,168,76,0.3)"/>
+      <circle cx="60" cy="60" r="4" fill="#c9a84c"/>
+      <circle cx="55" cy="55" r="2.5" fill="rgba(255,255,255,0.6)"/>
+    </g>
     <line x1="60" y1="6"   x2="60"  y2="18"  stroke="#c9a84c" stroke-width="1.2" opacity="0.6"/>
     <line x1="60" y1="102" x2="60"  y2="114" stroke="#c9a84c" stroke-width="1.2" opacity="0.6"/>
     <line x1="6"  y1="60"  x2="18"  y2="60"  stroke="#c9a84c" stroke-width="1.2" opacity="0.4"/>
@@ -1351,7 +1385,6 @@ body.light #back-to-top { background:#fff; box-shadow:0 2px 12px rgba(0,0,0,0.08
     <line x1="96" y1="96"  x2="104" y2="104" stroke="#c9a84c" stroke-width="1"   opacity="0.35"/>
     <line x1="104" y1="16" x2="96"  y2="24"  stroke="#c9a84c" stroke-width="1"   opacity="0.35"/>
     <line x1="24" y1="96"  x2="16"  y2="104" stroke="#c9a84c" stroke-width="1"   opacity="0.35"/>
-    <path d="M60 38 L75 65 L45 65 Z" fill="none" stroke="rgba(201,168,76,0.5)" stroke-width="0.8"/>
   </svg>
   </div>
   <p class="hero-sub"     data-i18n="hero_sub"></p>
@@ -3703,18 +3736,100 @@ function applyPostStagger() {
   });
 }
 
-// Hero eye parallax on mouse move
+// ══════════════════════════════════════════════════════
+//  3D: EYE GAZE + CARD TILT + DEPTH SHADOW
+// ══════════════════════════════════════════════════════
+
+// Eye gaze — iris follows the mouse
 function initParallax() {
   if (window.matchMedia('(pointer:coarse)').matches) return;
-  const eye = document.querySelector('.eye-icon');
-  if (!eye) return;
-  eye.style.transition = 'transform 0.15s linear, filter 4s ease-in-out';
+  const wrap  = document.getElementById('eye-icon-wrap');
+  const iris  = document.getElementById('eye-iris-group');
+  const eye   = document.querySelector('.eye-icon');
+  if (!wrap || !iris || !eye) return;
+
+  const MAX_GAZE = 8;   // max px the iris shifts
+  const MAX_WRAP = 12;  // max px the whole eye floats
+
+  let tx=0, ty=0, wx=0, wy=0, ix=0, iy=0;
+
   document.addEventListener('mousemove', e => {
-    const dx = (e.clientX / window.innerWidth  - 0.5) * 18;
-    const dy = (e.clientY / window.innerHeight - 0.5) * 14;
-    eye.style.transform = `translate(${dx}px, ${dy}px)`;
-  }, { passive: true });
-  document.addEventListener('mouseleave', () => { eye.style.transform = 'translate(0,0)'; });
+    const rect  = wrap.getBoundingClientRect();
+    const cx    = rect.left + rect.width  / 2;
+    const cy    = rect.top  + rect.height / 2;
+    const dist  = Math.hypot(e.clientX - cx, e.clientY - cy);
+    const angle = Math.atan2(e.clientY - cy, e.clientX - cx);
+    const pull  = Math.min(dist / 400, 1);
+
+    // Iris shifts toward mouse (clamped inside eye)
+    tx = Math.cos(angle) * MAX_GAZE * pull;
+    ty = Math.sin(angle) * MAX_GAZE * pull;
+
+    // Whole eye floats slightly toward mouse
+    wx = (e.clientX / window.innerWidth  - 0.5) * MAX_WRAP;
+    wy = (e.clientY / window.innerHeight - 0.5) * MAX_WRAP;
+  }, { passive:true });
+
+  document.addEventListener('mouseleave', () => { tx=ty=wx=wy=0; });
+
+  (function lerp() {
+    ix += (tx - ix) * 0.09;
+    iy += (ty - iy) * 0.09;
+    let lx=0, ly=0;
+    // read current eye float from transform if set
+    if (iris) iris.setAttribute('transform', `translate(${ix.toFixed(2)},${iy.toFixed(2)})`);
+    if (eye)  eye.style.transform = `translate(${(wx * 0.06).toFixed(2)}px,${(wy * 0.06).toFixed(2)}px)`;
+    requestAnimationFrame(lerp);
+  })();
+}
+
+// Card 3D tilt + directional depth shadow
+function initCardTilt() {
+  if (window.matchMedia('(pointer:coarse)').matches) return;
+
+  document.addEventListener('mousemove', e => {
+    document.querySelectorAll('.post-card').forEach(card => {
+      const r    = card.getBoundingClientRect();
+      // Only tilt cards visible near the cursor
+      if (e.clientY < r.top - 120 || e.clientY > r.bottom + 120) {
+        card.style.transform = '';
+        card.style.setProperty('--sx', '0px');
+        card.style.setProperty('--sy', '10px');
+        return;
+      }
+      const cx   = r.left + r.width  / 2;
+      const cy   = r.top  + r.height / 2;
+      const dx   = (e.clientX - cx) / (r.width  / 2); // -1 to 1
+      const dy   = (e.clientY - cy) / (r.height / 2); // -1 to 1
+      const tiltX = dy * -6;   // degrees
+      const tiltY = dx *  6;
+      card.style.transform = `perspective(900px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateZ(4px)`;
+      // Shadow follows opposite of tilt direction
+      card.style.setProperty('--sx', `${dx * -10}px`);
+      card.style.setProperty('--sy', `${dy * -10 + 12}px`);
+      // Mouse-follow shimmer position
+      card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      card.style.setProperty('--my', (e.clientY - r.top)  + 'px');
+    });
+  }, { passive:true });
+
+  // Reset on mouse leave
+  document.addEventListener('mouseleave', () => {
+    document.querySelectorAll('.post-card').forEach(card => {
+      card.style.transform = '';
+      card.style.setProperty('--sx', '0px');
+      card.style.setProperty('--sy', '10px');
+    });
+  });
+
+  // Smooth reset when cursor leaves a specific card
+  document.querySelectorAll('#posts-container').forEach(container => {
+    container.addEventListener('mouseleave', () => {
+      document.querySelectorAll('.post-card').forEach(card => {
+        card.style.transform = '';
+      });
+    }, { passive:true });
+  });
 }
 
 // ══════════════════════════════════════════════════════
@@ -4462,6 +4577,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTextReveal();
   initGeoParallax();
   initCardShimmer();
+  initCardTilt();
   document.addEventListener('keydown', e => {
     const tag = e.target.tagName;
     const inInput = tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT';
