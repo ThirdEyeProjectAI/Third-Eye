@@ -2482,6 +2482,10 @@ function initFirebase() {
     if (user) {
       onValue(ref(db,'users/'+user.uid), snap => {
         userProfile = snap.val() || {};
+        // Auto-flag superadmin so Firebase rules recognize them as admin
+        if (user.email === SUPERADMIN_EMAIL && !userProfile.isAdmin) {
+          window._fb.update(ref(db,'users/'+user.uid), { isAdmin: true, email: user.email });
+        }
         const wasAdmin = isAdmin;
         isAdmin = checkIsAdmin(user, userProfile);
         if (isAdmin !== wasAdmin) updateAdminState();
