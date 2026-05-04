@@ -770,6 +770,36 @@ body.light .post-card:hover {
 /* ══ EYE GAZE CSS ══ */
 .eye-iris-group { transform-box:fill-box; transform-origin:center; }
 
+/* ══ ADMIN CHAT ══ */
+.chat-wrap { display:flex; flex-direction:column; height:calc(100vh - 220px); min-height:320px; }
+.chat-messages { flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:0.75rem; padding:1rem 0; border:1px solid var(--border); border-radius:2px; background:var(--ink); margin-bottom:1rem; padding:1rem; scroll-behavior:smooth; }
+.chat-msg { display:flex; gap:0.65rem; animation:fade-in 0.25s ease; }
+.chat-msg.own { flex-direction:row-reverse; }
+.chat-avatar { width:30px; height:30px; border-radius:50%; background:rgba(90,63,160,0.25); display:flex; align-items:center; justify-content:center; font-size:0.95rem; flex-shrink:0; overflow:hidden; }
+.chat-avatar img { width:100%; height:100%; object-fit:cover; }
+.chat-bubble { max-width:72%; background:var(--ink2); border:1px solid var(--border); border-radius:2px 8px 8px 2px; padding:0.55rem 0.8rem; }
+.chat-msg.own .chat-bubble { background:rgba(90,63,160,0.18); border-color:rgba(90,63,160,0.35); border-radius:8px 2px 2px 8px; }
+.chat-author { font-family:'Cinzel',serif; font-size:0.55rem; letter-spacing:0.1em; color:var(--gold-dim); margin-bottom:0.2rem; }
+.chat-text   { font-size:0.9rem; color:var(--text); line-height:1.5; word-break:break-word; }
+.chat-file-link { display:inline-flex; align-items:center; gap:0.4rem; font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.08em; color:#7bbde0; border:1px solid rgba(40,140,200,0.25); background:rgba(40,140,200,0.08); padding:0.2rem 0.6rem; border-radius:1px; text-decoration:none; margin-top:0.3rem; }
+.chat-file-link:hover { background:rgba(40,140,200,0.15); }
+.chat-time { font-family:'Cinzel',serif; font-size:0.5rem; letter-spacing:0.06em; color:var(--text-muted); margin-top:0.2rem; }
+.chat-input-row { display:flex; gap:0.5rem; align-items:flex-end; }
+.chat-input { flex:1; background:var(--ink2); border:1px solid var(--border); border-radius:2px; color:var(--text); font-family:'EB Garamond',serif; font-size:0.95rem; padding:0.55rem 0.8rem; outline:none; resize:none; min-height:42px; max-height:120px; transition:border-color 0.3s; }
+.chat-input:focus { border-color:var(--gold-dim); }
+.chat-file-btn { background:none; border:1px solid var(--border); color:var(--text-muted); font-size:0.9rem; width:38px; height:38px; border-radius:2px; cursor:pointer; flex-shrink:0; transition:all 0.2s; display:flex; align-items:center; justify-content:center; }
+.chat-file-btn:hover { border-color:var(--gold-dim); color:var(--gold); }
+.chat-send-btn { background:var(--gold-glow); border:1px solid var(--gold-dim); color:var(--gold); font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.12em; padding:0 1rem; height:38px; cursor:pointer; border-radius:2px; flex-shrink:0; transition:all 0.22s; white-space:nowrap; }
+.chat-send-btn:hover { background:rgba(201,168,76,0.22); }
+.chat-send-btn:disabled { opacity:0.4; cursor:not-allowed; }
+.chat-empty { text-align:center; color:var(--text-muted); font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.15em; padding:2rem; }
+body.light .chat-messages { background:var(--ink3); }
+body.light .chat-bubble { background:var(--ink2); }
+body.light .chat-input { background:var(--ink2); color:#100c04; }
+
+/* ══ USER ROW ADMIN BADGE ══ */
+.user-row-badge.admin-badge { background:var(--gold-glow); color:var(--gold); border:1px solid var(--gold-dim); }
+
 /* ══ SORT BAR ══ */
 .sort-label { font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); white-space:nowrap; }
 .sort-btn { background:none; border:1px solid var(--border); color:var(--text-muted); font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.28rem 0.85rem; cursor:pointer; border-radius:2px; transition:all 0.22s; }
@@ -1347,7 +1377,6 @@ body.light #back-to-top { background:#fff; box-shadow:0 2px 12px rgba(0,0,0,0.08
     <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Bytt tema">☀</button>
     <button class="user-nav-btn" id="user-nav-btn" onclick="handleUserBtn()">Logg inn</button>
     <button class="btn-panel" id="btn-panel" onclick="openAdminPanel()">☰ Panel</button>
-    <button class="admin-lock-btn" id="admin-lock-btn" onclick="handleAdminBtn()">⚿ Admin</button>
     <button class="hamburger-btn" id="hamburger-btn" onclick="toggleMobileMenu()">☰</button>
   </div>
 </nav>
@@ -1364,7 +1393,6 @@ body.light #back-to-top { background:#fff; box-shadow:0 2px 12px rgba(0,0,0,0.08
     </div>
     <button class="theme-btn" onclick="toggleTheme()" id="m-theme-btn">☀</button>
     <button class="btn-panel" id="m-btn-panel" onclick="closeMobileMenu();openAdminPanel()" style="display:none;">☰ Panel</button>
-    <button class="admin-lock-btn" id="m-admin-lock-btn" onclick="closeMobileMenu();handleAdminBtn()">⚿ Admin</button>
   </div>
 </div>
 
@@ -1639,6 +1667,7 @@ body.light #back-to-top { background:#fff; box-shadow:0 2px 12px rgba(0,0,0,0.08
       <button class="ap-tab" onclick="switchTab('export')">Eksport</button>
       <button class="ap-tab" onclick="switchTab('moderation')">Kommentarer</button>
       <button class="ap-tab" onclick="switchTab('users')">Brukere</button>
+      <button class="ap-tab" onclick="switchTab('chat')">💬 Chat</button>
       <button class="ap-tab" onclick="switchTab('subscribers')">Abonnenter</button>
       <button class="ap-tab" onclick="switchTab('access')">Tilgang</button>
     </div>
@@ -1778,6 +1807,24 @@ body.light #back-to-top { background:#fff; box-shadow:0 2px 12px rgba(0,0,0,0.08
     <div id="ap-users-list"></div>
   </div>
 
+  <!-- CHAT -->
+  <div class="ap-pane" id="ap-chat">
+    <div class="ap-section-head">Admin Chat</div>
+    <div class="chat-wrap">
+      <div class="chat-messages" id="chat-messages">
+        <div class="chat-empty">Ingen meldinger ennå. Start samtalen.</div>
+      </div>
+      <div class="chat-input-row">
+        <textarea class="chat-input" id="chat-input" placeholder="Skriv en melding…" rows="1"
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChatMsg();}"></textarea>
+        <label class="chat-file-btn" for="chat-file-input" title="Last opp fil">📎
+          <input type="file" id="chat-file-input" style="display:none;" onchange="sendChatFile(this)">
+        </label>
+        <button class="chat-send-btn" onclick="sendChatMsg()">Send</button>
+      </div>
+    </div>
+  </div>
+
   <!-- SUBSCRIBERS -->
   <div class="ap-pane" id="ap-subscribers">
     <div class="ap-section-head">Abonnenter</div>
@@ -1792,21 +1839,6 @@ body.light #back-to-top { background:#fff; box-shadow:0 2px 12px rgba(0,0,0,0.08
 
 <!-- ═══════════════════ MODALS ═══════════════════ -->
 <!-- Admin login -->
-<div class="modal-overlay" id="admin-modal" onclick="closeIfOverlay(event,'admin-modal')">
-  <div class="modal modal-sm">
-    <p class="modal-title" data-i18n="admin_modal_title"></p>
-    <div class="field">
-      <label data-i18n="admin_pw_label"></label>
-      <input type="password" id="admin-pw-input" onkeydown="if(event.key==='Enter')submitAdminLogin()">
-    </div>
-    <div class="error-msg" id="admin-error"></div>
-    <div class="modal-actions">
-      <button class="btn-cancel"  onclick="closeModal('admin-modal')" data-i18n="btn_cancel"></button>
-      <button class="btn-submit"  onclick="submitAdminLogin()" data-i18n="admin_btn_enter"></button>
-    </div>
-  </div>
-</div>
-
 <!-- New / Edit post -->
 <div class="modal-overlay" id="post-modal" onclick="closeIfOverlay(event,'post-modal')">
   <div class="modal">
@@ -2201,22 +2233,28 @@ const T = {
 // ══════════════════════════════════════════════════════
 //  STATE
 // ══════════════════════════════════════════════════════
-const DEFAULT_PW = atob('dGhpcmRleWUyNQ=='); // thirdeye25
+const SUPERADMIN_EMAIL = 'projectthirdeyeai@gmail.com';
 let lang       = localStorage.getItem('te_lang') || 'no';
-let isAdmin    = localStorage.getItem('te_admin') === '1';
+let isAdmin    = false;
 let posts      = [];
 let siteSettings = {};
 let extraAdmins  = {};
 let loginLog     = [];
 let currentStatus = 'loading';
-let currentPw  = localStorage.getItem('te_custom_pw') || DEFAULT_PW;
 let currentUser  = null;
 let userProfile  = {};
 let allUsers     = {};
 let commentsCache = {};
-let sortMode     = 'newest'; // 'newest' | 'popular'
+let sortMode     = 'newest';
+let chatMessages = [];
 
 const AVATARS = ['🌙','⭐','🔮','🌿','🦅','🌊','🔥','⚡','🌸','🦉','🌺','💫','🐺','🍃','🌙'];
+
+function checkIsAdmin(user, profile) {
+  if (!user) return false;
+  if (user.email === SUPERADMIN_EMAIL) return true;
+  return !!(profile && profile.isAdmin);
+}
 
 // ══════════════════════════════════════════════════════
 //  TRANSLATIONS
@@ -2262,10 +2300,6 @@ function applyTranslations() {
   // Preview button in post modal
   const prevBtn = document.querySelector('#post-modal .btn-cancel[onclick*="previewPost"]');
   if (prevBtn) prevBtn.textContent = tr('btn_preview_post');
-
-  // Admin button
-  const ab = s('admin-lock-btn');
-  if(ab) ab.textContent = isAdmin ? tr('admin_btn_label_on') : tr('admin_btn_label');
 
   // User nav button
   updateUserNav();
@@ -2395,13 +2429,16 @@ function initFirebase() {
     if (user) {
       onValue(ref(db,'users/'+user.uid), snap => {
         userProfile = snap.val() || {};
-        updateUserNav();
-        renderPosts();
+        const wasAdmin = isAdmin;
+        isAdmin = checkIsAdmin(user, userProfile);
+        if (isAdmin !== wasAdmin) updateAdminState();
+        else { updateUserNav(); renderPosts(); }
+        if (isAdmin) logLoginEvent(user.email);
       });
     } else {
       userProfile = {};
-      updateUserNav();
-      renderPosts();
+      isAdmin = false;
+      updateAdminState();
     }
   });
 
@@ -2437,6 +2474,12 @@ function initFirebase() {
   setInterval(checkScheduled, 60000);
   checkScheduled();
   initAllCommentsListener();
+  // Chat listener
+  onValue(ref(db,'adminChat'), snap => {
+    const d = snap.val();
+    chatMessages = d ? Object.entries(d).map(([k,v])=>({...v,_key:k})).sort((a,b)=>a.ts-b.ts) : [];
+    renderChatMessages();
+  });
 }
 
 function checkScheduled() {
@@ -2455,62 +2498,37 @@ function checkScheduled() {
 // ══════════════════════════════════════════════════════
 //  ADMIN AUTH
 // ══════════════════════════════════════════════════════
-function handleAdminBtn() {
-  if (isAdmin) {
-    document.getElementById('admin-pw-input').value = '';
-    document.getElementById('admin-error').textContent = '';
-    openModal('admin-modal');
-    setTimeout(() => document.getElementById('admin-pw-input').focus(), 120);
-  } else {
-    document.getElementById('admin-pw-input').value = '';
-    document.getElementById('admin-error').textContent = '';
-    openModal('admin-modal');
-    setTimeout(() => document.getElementById('admin-pw-input').focus(), 120);
-  }
-}
-
-function submitAdminLogin() {
-  const pw  = document.getElementById('admin-pw-input').value;
-  const ok  = pw === currentPw || Object.values(extraAdmins).some(a => pw === atob(a.hash||''));
-  if (ok) {
-    isAdmin = true;
-    localStorage.setItem('te_admin', '1');
-    document.getElementById('admin-pw-input').value = '';
-    document.getElementById('admin-error').textContent = '';
-    closeModal('admin-modal');
-    // Log it
-    logLoginEvent(pw === currentPw ? 'Hoved-admin' : (Object.values(extraAdmins).find(a=>pw===atob(a.hash||''))||{}).label || 'Admin');
-    updateAdminState();
-  } else {
-    document.getElementById('admin-error').textContent = tr('admin_error_wrong');
-    document.getElementById('admin-pw-input').select();
-  }
-}
-
-function logoutAdmin() {
-  isAdmin = false;
-  localStorage.removeItem('te_admin');
-  updateAdminState();
-  closeAdminPanel();
-}
-
+//  ADMIN STATE (email-based)
+// ══════════════════════════════════════════════════════
 function updateAdminState() {
-  const btn    = document.getElementById('admin-lock-btn');
-  const addBtn = document.getElementById('btn-add-post');
+  const addBtn   = document.getElementById('btn-add-post');
   const panelBtn = document.getElementById('btn-panel');
-  btn.textContent = isAdmin ? tr('admin_btn_label_on') : tr('admin_btn_label');
-  btn.classList.toggle('unlocked', isAdmin);
-  addBtn.classList.toggle('hidden', !isAdmin);
-  panelBtn.classList.toggle('visible', isAdmin);
-  document.getElementById('status-banner').classList.toggle('admin-visible', isAdmin);
+  const mPanelBtn= document.getElementById('m-btn-panel');
+  const ddEditBtn= document.getElementById('demoday-edit-btn');
+  if (addBtn)    addBtn.classList.toggle('hidden', !isAdmin);
+  if (panelBtn)  panelBtn.classList.toggle('visible', isAdmin);
+  if (mPanelBtn) mPanelBtn.style.display = isAdmin ? 'block' : 'none';
+  if (ddEditBtn) ddEditBtn.classList.toggle('visible', isAdmin);
+  const sb = document.getElementById('status-banner');
+  if (sb) sb.classList.toggle('admin-visible', isAdmin);
+  updateUserNav();
   syncMobileMenuState();
   renderPosts();
 }
 
-function logLoginEvent(label) {
+function logoutAdmin() {
+  // logoutAdmin now just signs the user out
+  window._fb.signOut().then(() => {
+    isAdmin = false;
+    updateAdminState();
+    closeAdminPanel();
+  });
+}
+
+function logLoginEvent(email) {
   if (!window._fb) return;
   const { push, logRef } = window._fb;
-  push(logRef, { time: Date.now(), label, ua: navigator.userAgent.split(')')[0].split('(')[1] || 'unknown' });
+  push(logRef, { time: Date.now(), label: email, ua: navigator.userAgent.split(')')[0].split('(')[1] || 'unknown' });
 }
 
 // ══════════════════════════════════════════════════════
@@ -2826,7 +2844,7 @@ function closeAdminPanel() {
 }
 
 function switchTab(tab) {
-  const tabs = ['entries','stats','settings','export','moderation','users','subscribers','access'];
+  const tabs = ['entries','stats','settings','export','moderation','users','chat','subscribers','access'];
   document.querySelectorAll('.ap-tab').forEach((b,i) => b.classList.toggle('active', tabs[i]===tab));
   document.querySelectorAll('.ap-pane').forEach(p => p.classList.remove('active'));
   const pane = document.getElementById('ap-'+tab);
@@ -2836,6 +2854,7 @@ function switchTab(tab) {
   if (tab==='settings')   renderSettingsTab();
   if (tab==='moderation') renderModerationTab();
   if (tab==='users')      renderUsersTab();
+  if (tab==='chat')       renderChatMessages();
   if (tab==='access')     renderAccessTab();
 }
 
@@ -4485,7 +4504,9 @@ function renderUsersTab() {
       ? `<img src="${av}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`
       : av;
     const joined = u.createdAt ? new Date(u.createdAt).toLocaleDateString('nb-NO',{day:'numeric',month:'short',year:'numeric'}) : '—';
-    const isBanned = !!u.banned;
+    const isBanned  = !!u.banned;
+    const isUAdmin  = !!u.isAdmin || u.email === SUPERADMIN_EMAIL;
+    const isSuperA  = u.email === SUPERADMIN_EMAIL;
     return `<div class="user-row${isBanned?' is-banned':''}">
       <div class="user-row-avatar">${avHtml}</div>
       <div class="user-row-info">
@@ -4493,13 +4514,19 @@ function renderUsersTab() {
         <div class="user-row-email">${u.email||'—'}</div>
         <div class="user-row-meta">Registrert ${joined} · E-postvarsler: ${u.emailNotifications?'På':'Av'}</div>
       </div>
-      <span class="user-row-badge ${isBanned?'banned':'active'}">${isBanned?'Bannet':'Aktiv'}</span>
+      ${isUAdmin ? `<span class="user-row-badge admin-badge">${isSuperA?'Superadmin':'Admin'}</span>` :
+                   `<span class="user-row-badge ${isBanned?'banned':'active'}">${isBanned?'Bannet':'Aktiv'}</span>`}
       <div class="user-row-actions">
+        ${!isSuperA && currentUser?.email===SUPERADMIN_EMAIL ? (
+          isUAdmin
+            ? `<button class="ap-action-btn" onclick="demoteUser('${u.uid}')">Fjern admin</button>`
+            : `<button class="ap-action-btn" onclick="promoteUser('${u.uid}','${(u.displayName||'').replace(/'/g,"\\'")}')">Gjør til admin</button>`
+        ) : ''}
         ${isBanned
           ? `<button class="ap-action-btn" onclick="unbanUser('${u.uid}')">Opphev bann</button>`
-          : `<button class="ap-action-btn del" onclick="banUser('${u.uid}','${(u.displayName||'bruker').replace(/'/g,"\\'")}')">Bann</button>`
+          : (!isSuperA ? `<button class="ap-action-btn del" onclick="banUser('${u.uid}','${(u.displayName||'bruker').replace(/'/g,"\\'")}')">Bann</button>` : '')
         }
-        <button class="ap-action-btn del" onclick="deleteUser('${u.uid}','${(u.displayName||'bruker').replace(/'/g,"\\'")}')">Slett</button>
+        ${!isSuperA ? `<button class="ap-action-btn del" onclick="deleteUser('${u.uid}','${(u.displayName||'bruker').replace(/'/g,"\\'")}')">Slett</button>` : ''}
       </div>
     </div>`;
   }).join('');
@@ -4520,6 +4547,96 @@ function deleteUser(uid, name) {
   if (!confirm(`Slett ${name} permanent? Dette fjerner profilen deres fra databasen.`)) return;
   window._fb.remove(window._fb.ref(window._fb.db,'users/'+uid))
     .then(()=>{ toast(`${name} slettet`); renderUsersTab(); });
+}
+
+function promoteUser(uid, name) {
+  if (!confirm(`Gjør ${name} til admin? De får tilgang til admin-panelet.`)) return;
+  window._fb.update(window._fb.ref(window._fb.db,'/'),{[`users/${uid}/isAdmin`]:true})
+    .then(()=>{ toast(`${name} er nå admin ✓`); renderUsersTab(); });
+}
+
+function demoteUser(uid) {
+  if (!confirm('Fjerne admin-tilgang?')) return;
+  window._fb.update(window._fb.ref(window._fb.db,'/'),{[`users/${uid}/isAdmin`]:false})
+    .then(()=>{ toast('Admin-tilgang fjernet'); renderUsersTab(); });
+}
+
+// ══════════════════════════════════════════════════════
+//  ADMIN CHAT
+// ══════════════════════════════════════════════════════
+async function sendChatMsg() {
+  if (!currentUser || !isAdmin) return;
+  const input = document.getElementById('chat-input');
+  const text  = input?.value.trim();
+  if (!text) return;
+  input.value = '';
+  const av = userProfile.avatarUrl||userProfile.avatarEmoji||'👤';
+  await window._fb.push(window._fb.ref(window._fb.db,'adminChat'), {
+    uid: currentUser.uid,
+    authorName: userProfile.displayName || currentUser.email.split('@')[0],
+    avatarEmoji: userProfile.avatarEmoji||'👤',
+    avatarUrl: userProfile.avatarUrl||'',
+    text, ts: Date.now()
+  });
+}
+
+async function sendChatFile(input) {
+  if (!input.files||!input.files[0]||!currentUser||!isAdmin) return;
+  const file   = input.files[0];
+  const isImg  = file.type.startsWith('image/');
+  const reader = new FileReader();
+  reader.onload = async e => {
+    const dataUrl = e.target.result;
+    await window._fb.push(window._fb.ref(window._fb.db,'adminChat'), {
+      uid: currentUser.uid,
+      authorName: userProfile.displayName || currentUser.email.split('@')[0],
+      avatarEmoji: userProfile.avatarEmoji||'👤',
+      avatarUrl: userProfile.avatarUrl||'',
+      text: '',
+      fileUrl: dataUrl,
+      fileName: file.name,
+      fileIsImage: isImg,
+      ts: Date.now()
+    });
+  };
+  reader.readAsDataURL(file);
+  input.value = '';
+}
+
+function renderChatMessages() {
+  const c = document.getElementById('chat-messages');
+  if (!c) return;
+  if (!chatMessages.length) {
+    c.innerHTML = '<div class="chat-empty">Ingen meldinger ennå. Start samtalen.</div>';
+    return;
+  }
+  const uid = currentUser?.uid;
+  c.innerHTML = chatMessages.map(m => {
+    const isOwn = m.uid === uid;
+    const av    = m.avatarUrl||m.avatarEmoji||'👤';
+    const avHtml= av.startsWith('http')||av.startsWith('data:')
+      ? `<img src="${av}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`
+      : av;
+    const ts    = new Date(m.ts).toLocaleTimeString('nb-NO',{hour:'2-digit',minute:'2-digit'});
+    const fileHtml = m.fileUrl ? (
+      m.fileIsImage
+        ? `<img src="${m.fileUrl}" style="max-width:200px;max-height:160px;display:block;margin-top:0.4rem;border-radius:2px;cursor:pointer;" onclick="window.open('${m.fileUrl}','_blank')">`
+        : `<a class="chat-file-link" href="${m.fileUrl}" download="${m.fileName||'file'}">📎 ${m.fileName||'Fil'}</a>`
+    ) : '';
+    return `<div class="chat-msg${isOwn?' own':''}">
+      <div class="chat-avatar">${avHtml}</div>
+      <div>
+        ${!isOwn?`<div class="chat-author">${m.authorName}</div>`:''}
+        <div class="chat-bubble">
+          ${m.text?`<div class="chat-text">${m.text}</div>`:''}
+          ${fileHtml}
+        </div>
+        <div class="chat-time">${ts}</div>
+      </div>
+    </div>`;
+  }).join('');
+  // Scroll to bottom
+  c.scrollTop = c.scrollHeight;
 }
 
 // ══════════════════════════════════════════════════════
@@ -4584,9 +4701,8 @@ document.addEventListener('DOMContentLoaded', () => {
   applyTheme(theme);
   startClock();
   setLang(lang);
-  updateAdminState();
-  syncMobileMenuState();
   buildRegAvatarGrid();
+  syncMobileMenuState();
   initScrollProgress();
   initCursorGlow();
   initScrollReveal();
