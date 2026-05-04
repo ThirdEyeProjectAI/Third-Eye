@@ -4658,13 +4658,21 @@ function deleteUser(uid, name) {
 function promoteUser(uid, name) {
   if (!confirm(`Gjør ${name} til admin? De får tilgang til admin-panelet.`)) return;
   window._fb.update(window._fb.ref(window._fb.db,'/'),{[`users/${uid}/isAdmin`]:true})
-    .then(()=>{ toast(`${name} er nå admin ✓`); renderUsersTab(); });
+    .then(() => { toast(`${name} er nå admin ✓`); renderUsersTab(); })
+    .catch(err => {
+      console.error('Promote failed:', err);
+      toast('Feil: Firebase-reglene tillater ikke dette. Oppdater reglene.', true);
+    });
 }
 
 function demoteUser(uid) {
   if (!confirm('Fjerne admin-tilgang?')) return;
   window._fb.update(window._fb.ref(window._fb.db,'/'),{[`users/${uid}/isAdmin`]:false})
-    .then(()=>{ toast('Admin-tilgang fjernet'); renderUsersTab(); });
+    .then(() => { toast('Admin-tilgang fjernet'); renderUsersTab(); })
+    .catch(err => {
+      console.error('Demote failed:', err);
+      toast('Feil: Firebase-reglene tillater ikke dette. Oppdater reglene.', true);
+    });
 }
 
 // ══════════════════════════════════════════════════════
